@@ -3,9 +3,11 @@ import "./dashboard.css";
 function Dashboard() {
 	return (
 		<div className="dashboard">
-            <h1>Dashboard</h1>
-            <p>Welcome to the dashboard!</p>
-        </div>
+			<container>
+				<h1>Vehicle overview</h1>
+				<div className="parameters"></div>
+			</container>
+		</div>
 	);
 }
 

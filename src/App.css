@@ -7,7 +7,7 @@
 }
 
 body {
-  background: linear-gradient(#010005, #0d1529);
+  background: linear-gradient(#010005, #191c22);
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
@@ -22,19 +22,12 @@ nav {
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  background: #070707b6;
+  background: #070707d8;
   transition: 0.3s ease;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-left: 15px solid transparent;
-    border-right: 15px solid transparent;
-    border-bottom: 15px solid red;
-}
-
-nav:hover {
-  height: 100px;
-  background: #0d1529;
+  clip-path: polygon(100% 100%, 0 100%, 5% 0, 95% 0);
 }
 
 nav ul {
@@ -47,13 +40,19 @@ nav ul {
 
 nav ul li a {
   text-decoration: none;
-  color: #89b4db;
+  color: #ffffff;
   font-size: 18px;
   display: block;
-  width: 80px;
-  padding: 15px 0;
+  border: 2px solid transparent;
+  padding: 10px 5px;
+  transition: 0.3s ease;
 }
 
 nav ul li a:hover {
-  background: linear-gradient(90deg, #0d152900, rgb(44, 58, 94));
+  border-bottom: 2px solid #cfdae6;
+  cursor: pointer;
+}
+
+nav ul li a .active {
+  border-bottom: 2px solid #cfdae6;
 }
