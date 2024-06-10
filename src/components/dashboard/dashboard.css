@@ -1,0 +1,106 @@
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+
+.dashboard h1 {
+    font-size: 2.5rem;
+    color: #fff;
+    margin-top: 40px;
+    font-weight: 200;
+}
+
+.parameters {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+.parameters section {
+    width: 33%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 20px;
+    gap: 20px;
+}
+
+.text div {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #1b1b1b5b;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.text h2 {
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 200;
+}
+
+.text p {
+    color: #fff;
+    font-size: 1.4rem;
+    font-weight: 150;
+}
+
+.parameters .parameter {
+    background: #1b1b1b5b;
+    width: 220px;
+    height: 220px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.parameters .parameter .circle {
+    width: 85%;
+    height: 85%;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.parameters .parameter .circle h2 {
+    color: #fff;
+    font-weight: 200;
+}
+
+.parameters .parameter .circle p {
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 150;
+}
+
+.CircularProgressbar-text {
+    font-weight: 200;
+    flex-wrap: wrap;
+    width: 150px;
+}
+
+.main-four {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: auto;
+    flex-wrap: wrap;
+    gap: 40px;
+}

@@ -17,7 +17,7 @@ body {
 
 nav {
   height: 80px;
-  width: 60%;
+  width: 40%;
   position: fixed;
   bottom: 0;
   left: 50%;
@@ -41,18 +41,29 @@ nav ul {
 nav ul li a {
   text-decoration: none;
   color: #ffffff;
-  font-size: 18px;
+  font-size: 12px;
   display: block;
   border: 2px solid transparent;
   padding: 10px 5px;
   transition: 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 nav ul li a:hover {
   border-bottom: 2px solid #cfdae6;
   cursor: pointer;
+  color: rgb(43, 82, 189);
 }
 
 nav ul li a .active {
   border-bottom: 2px solid #cfdae6;
+}
+
+nav ul li a img {
+  width: 30px;
+  height: 30px;
+  filter: invert(1);
+  margin: 2px;
 }
