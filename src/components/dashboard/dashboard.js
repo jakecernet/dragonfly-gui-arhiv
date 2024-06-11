@@ -1,7 +1,8 @@
+import { useState } from "react";
 import "./dashboard.css";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import { useState } from "react";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 
 const circleDisplay = ({ value, unit, maxRange, color }) => {
 	return (
@@ -32,6 +33,7 @@ function Dashboard({ data }) {
 	let vehicleStatus = data.Armed ? "Armed" : "Disarmed";
 	let servoDeployed = data.ServoParachuteStatus ? "Deployed" : "Not deployed";
 	let beeperEnabled = data.BeeperStatus ? "On" : "Off";
+	let position = [1.3521, 103.8198];
 
 	const [servoStatus, setServoStatus] = useState(servoDeployed);
 	const [beeperStatus, setBeeperStatus] = useState(beeperEnabled);
@@ -51,11 +53,15 @@ function Dashboard({ data }) {
 			<h1>Vehicle overview</h1>
 			<div className="status">
 				<div className="left">
-					</div>
+					<h2>
+						Vehicle status: <span>{vehicleStatus}</span>
+					</h2>
+				</div>
 				<div className="right">
-					<div>
-						</div>
-
+					<h2>Flight time: 00 : 00 : 12</h2>
+					<h2>Uptime: 00 : 34 : 12</h2>
+				</div>
+			</div>
 			<div className="parameters">
 				<section className="text">
 					<div className="heights">
@@ -82,7 +88,6 @@ function Dashboard({ data }) {
 							{data.GPSCords.latitude}, {data.GPSCords.longitude}
 						</p>
 					</div>
-					<div className="map"></div>
 				</section>
 				<section className="main-four">
 					<div className="parameter">
@@ -113,15 +118,23 @@ function Dashboard({ data }) {
 						</div>
 					</div>
 				</section>
-				<section className="text">
-					<div>
-						<h2>Flight time</h2>
-						<p>00 : 00 : 12</p>
-					</div>
-					<div>
-						<h2>Uptime</h2>
-						<p>00 : 34 : 12</p>
-					</div>
+				<section className="map">
+					<MapContainer
+						center={position}
+						zoom={13}
+						scrollWheelZoom={false}
+						style={{ height: "400px", width: "400px" }}
+						>
+						<TileLayer
+							attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+							url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+						/>
+						<Marker position={position}>
+							<Popup>
+								A pretty CSS3 popup. <br /> Easily customizable.
+							</Popup>
+						</Marker>
+					</MapContainer>
 				</section>
 			</div>
 		</div>
