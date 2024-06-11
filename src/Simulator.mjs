@@ -28,7 +28,7 @@ let InitialInputData = {
 	AccelerationY: 0,
 	AccelerationZ: 0,
 	BeeperStatus: Math.random() > 0.5,
-	ServoParachuteStatus: Math.random() > 0.5,
+	ServoParachuteStatus: 0,
 	Armed: Math.random() > 0.5,
 	InFlight: Math.random() > 0.5,
 	FlightTime: 0,
@@ -60,8 +60,6 @@ function GetData() {
 	data.AccelerationX = Math.floor(Math.random() * 100);
 	data.AccelerationY = Math.floor(Math.random() * 100);
 	data.AccelerationZ = Math.floor(Math.random() * 100);
-	data.BeeperStatus = Math.random() > 0.5;
-	data.ServoParachuteStatus = Math.random() > 0.5;
 	data.Armed = Math.random() > 0.5;
 	data.InFlight = Math.random() > 0.5;
 	data.FlightTime += 1;

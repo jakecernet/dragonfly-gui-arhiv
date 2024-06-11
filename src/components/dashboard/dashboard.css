@@ -28,11 +28,38 @@
     justify-content: center;
 }
 
+.settings {
+    width: 80%;
+}
+
+.settings div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    transition: 0.2s ease;
+}
+
+.settings div:hover {
+    cursor: pointer;
+    scale: 1.01;
+    background: rgba(138, 0, 0, 0.39);
+    color: rgb(0, 155, 83);
+}
+
 .text {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 0 20px;
+    gap: 20px;
+}
+
+.text .heights {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
     gap: 20px;
 }
 
@@ -60,8 +87,8 @@
 
 .parameters .parameter {
     background: #1b1b1b5b;
-    width: 220px;
-    height: 220px;
+    width: 200px;
+    height: 200px;
     border-radius: 10px;
     display: flex;
     justify-content: center;
@@ -77,6 +104,7 @@
     align-items: center;
     flex-direction: column;
     text-align: center;
+    box-shadow: 0 0 10px rgb(255, 255, 255);
 }
 
 .parameters .parameter .circle h2 {
