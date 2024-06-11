@@ -21,13 +21,14 @@ const circleDisplay = ({ value, unit, maxRange, color }) => {
 	);
 };
 
-function Dashboard() {
-	let temperature = 21;
-	let pressure = 2.4;
-	let voltage = 12.5;
-	let height = 204;
-	let vehicleStatus = "Armed";
-	let servoDeployed = "Undeployed";
+function Dashboard({data}){
+	console.log(data);
+	let temperature = data.Temperature;
+	let pressure =  data.Pressure;
+	let voltage =  data.BatteryVoltage;
+	let height = data.RelativeHeight;
+	let vehicleStatus = data.Armed ? "Armed" : "Disarmed";
+	let servoDeployed = data.ServoParachuteStatus ? "Deployed" : "Not Deployed";
 
 	return (
 		<div className="dashboard">
