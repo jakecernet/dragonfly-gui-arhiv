@@ -2,7 +2,6 @@ import { useState } from "react";
 import "./dashboard.css";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 
 const circleDisplay = ({ value, unit, maxRange, color }) => {
 	return (
@@ -30,10 +29,9 @@ function Dashboard({ data }) {
 	let pressure = data.Pressure;
 	let voltage = data.BatteryVoltage;
 	let height = data.RelativeHeight;
-	let vehicleStatus = data.Armed ? "Armed" : "Disarmed";
 	let servoDeployed = data.ServoParachuteStatus ? "Deployed" : "Not deployed";
 	let beeperEnabled = data.BeeperStatus ? "On" : "Off";
-	let position = [1.3521, 103.8198];
+	let position = [1.3521, 74.8198];
 
 	const [servoStatus, setServoStatus] = useState(servoDeployed);
 	const [beeperStatus, setBeeperStatus] = useState(beeperEnabled);
@@ -51,17 +49,6 @@ function Dashboard({ data }) {
 	return (
 		<div className="dashboard">
 			<h1>Vehicle overview</h1>
-			<div className="status">
-				<div className="left">
-					<h2>
-						Vehicle status: <span>{vehicleStatus}</span>
-					</h2>
-				</div>
-				<div className="right">
-					<h2>Flight time: 00 : 00 : 12</h2>
-					<h2>Uptime: 00 : 34 : 12</h2>
-				</div>
-			</div>
 			<div className="parameters">
 				<section className="text">
 					<div className="heights">
@@ -107,7 +94,7 @@ function Dashboard({ data }) {
 								temperature > 40 ? "red" : "rgb(43, 82, 189)",
 						})}
 					</div>
-					<div className="settings text">
+					<div className="text settingsDash">
 						<div onClick={handleServoClick}>
 							<h2>Servo status</h2>
 							<p>{servoStatus}</p>
@@ -119,22 +106,14 @@ function Dashboard({ data }) {
 					</div>
 				</section>
 				<section className="map">
-					<MapContainer
-						center={position}
-						zoom={13}
-						scrollWheelZoom={false}
-						style={{ height: "400px", width: "400px" }}
-						>
-						<TileLayer
-							attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-							url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-						/>
-						<Marker position={position}>
-							<Popup>
-								A pretty CSS3 popup. <br /> Easily customizable.
-							</Popup>
-						</Marker>
-					</MapContainer>
+					<iframe
+						src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d0!2d${position[1]}!3d${position[0]}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDU1JzEwLjAiTiAxMDPCsDAwJzUwLjAiVw!5e0!3m2!1sen!2suk!4v1634234567890!5m2!1sen!2suk`}
+						height="450"
+						width="85%"
+						style={{ border: 0 }}
+						allowFullScreen=""
+						loading="lazy"
+						title="map"></iframe>
 				</section>
 			</div>
 		</div>

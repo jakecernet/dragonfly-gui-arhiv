@@ -6,7 +6,12 @@ import settingsIcon from "./icons/settings.svg";
 import analysisIcon from "./icons/analysis.svg";
 
 import Dashboard from "./components/dashboard/dashboard";
+import Analysis from "./components/analysis/analysis";
+import Settings from "./components/settings/settings";
+
 import GetData from "./Simulator.mjs";
+
+let vehicleStatus = "Armed";
 
 function App() {
 	const [selected, setSelected] = useState("dashboard");
@@ -37,7 +42,7 @@ function App() {
 							Analysis
 						</a>
 					</li>
-					<li onClick={() => setSelected("profile")}>
+					<li onClick={() => setSelected("settings")}>
 						<a>
 							<img src={settingsIcon} alt="Settings" />
 							Settings
@@ -45,8 +50,21 @@ function App() {
 					</li>
 				</ul>
 			</nav>
+			<div className="status">
+				<div className="left">
+					<h2>
+						Vehicle status: <span>{vehicleStatus}</span>
+					</h2>
+				</div>
+				<div className="right">
+					<h2>Flight time: 00 : 00 : 12</h2>
+					<h2>Uptime: 00 : 34 : 12</h2>
+				</div>
+			</div>
 			<div className="content">
 				{selected === "dashboard" && <Dashboard data={displayData} />}
+				{selected === "analysis" && <Analysis data={displayData} />}
+				{selected === "settings" && <Settings data={displayData} />}
 			</div>
 		</div>
 	);

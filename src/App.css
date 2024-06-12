@@ -67,3 +67,53 @@ nav ul li a img {
   filter: invert(1);
   margin: 2px;
 }
+
+.status {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 40px;
+}
+
+.status .left,
+.status .right {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  color: #fff;
+}
+
+.status .left h2 {
+  font-size: 1.8rem;
+  font-weight: 200;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+}
+
+.status .left h2 span {
+  width: 160px;
+  text-align: center;
+  background: #4602025b;
+  padding: 10px;
+  border-radius: 10px;
+  text-transform: uppercase;
+}
+
+.status .right {
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  margin-top: -5px;
+}
+
+.status .right h2 {
+  font-size: 1.5rem;
+  font-weight: 200;
+}
+
+.content{
+  margin-top: -100px;
+}

@@ -16,7 +16,7 @@ function GetRandomTemperature() {
 }
 
 let InitialInputData = {
-	//GPSCords: getRandomGpsCoordinates(),
+	GPSCords: getRandomGpsCoordinates(),
 	PressureHeight: 870,
 	GPSHeight: 860,
 	RelativeHeight: 0,

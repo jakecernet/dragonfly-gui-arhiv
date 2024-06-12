@@ -1,0 +1,12 @@
+.analysis {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.analysis h1 {
+    font-size: 2.5rem;
+    color: #fff;
+    margin-top: 40px;
+    font-weight: 200;
+}
