@@ -2,8 +2,6 @@ import "./analysis.css";
 
 import data from "../../Simulator.mjs";
 
-let vehicleStatus = data.Armed ? "Armed" : "Disarmed";
-
 const Analysis = () => {
     return (
 		<div className="analysis">
