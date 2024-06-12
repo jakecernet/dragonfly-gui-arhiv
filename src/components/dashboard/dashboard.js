@@ -2,6 +2,16 @@ import { useState } from "react";
 import "./dashboard.css";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import L from "leaflet";
+
+const icon = new L.Icon({
+	iconUrl: "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png",
+	iconSize: [50, 50],
+	popupAnchor: [-25, -35],
+	iconAnchor: [25, 50],
+});
 
 const circleDisplay = ({ value, unit, maxRange, color }) => {
 	return (
@@ -31,7 +41,7 @@ function Dashboard({ data }) {
 	let height = data.RelativeHeight;
 	let servoDeployed = data.ServoParachuteStatus ? "Deployed" : "Not deployed";
 	let beeperEnabled = data.BeeperStatus ? "On" : "Off";
-	let position = [1.3521, 74.8198];
+	let position = [46.0569, 14.5058];
 
 	const [servoStatus, setServoStatus] = useState(servoDeployed);
 	const [beeperStatus, setBeeperStatus] = useState(beeperEnabled);
@@ -106,14 +116,25 @@ function Dashboard({ data }) {
 					</div>
 				</section>
 				<section className="map">
-					<iframe
-						src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d0!2d${position[1]}!3d${position[0]}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDU1JzEwLjAiTiAxMDPCsDAwJzUwLjAiVw!5e0!3m2!1sen!2suk!4v1634234567890!5m2!1sen!2suk`}
-						height="450"
-						width="85%"
-						style={{ border: 0 }}
-						allowFullScreen=""
-						loading="lazy"
-						title="map"></iframe>
+					<MapContainer
+						center={position}
+						zoom={13}
+						scrollWheelZoom={false}
+						style={{
+							height: "100%",
+							width: "85%",
+							borderRadius: "10px",
+							marginTop: "10px",
+						}}>
+						<TileLayer
+							url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+							attribution='&copy; <a href="https://www.openstreetmap.org/copyright">
+						OpenStreetMap</a> contributors'
+						/>
+						<Marker position={position} icon={icon}>
+							<Popup>Vehicle position</Popup>
+						</Marker>
+					</MapContainer>
 				</section>
 			</div>
 		</div>
