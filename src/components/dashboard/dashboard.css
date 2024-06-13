@@ -62,6 +62,18 @@
     gap: 20px;
 }
 
+.changeable img {
+    width: 30px;
+    height: 30px;
+    filter: invert(1);
+    transition: 0.3s ease;
+}
+
+.changeable img:hover {
+    cursor: pointer;
+    rotate: 180deg;
+}
+
 .text div {
     width: 100%;
     display: flex;

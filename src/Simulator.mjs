@@ -1,9 +1,10 @@
 function getRandomGpsCoordinates() {
 	// Latitude ranges from -90 to 90
-	const lat = (Math.random() * 180 - 90).toFixed(6);
+	const lat = 46.0569;
+
 
 	// Longitude ranges from -180 to 180
-	const lon = (Math.random() * 360 - 180).toFixed(6);
+	const lon = 14.5058;
 
 	return {
 		latitude: lat,

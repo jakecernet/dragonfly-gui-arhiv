@@ -1,10 +1,17 @@
 import { useState } from "react";
+
 import "./dashboard.css";
+
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+
+import settingsIcon from "../../icons/settings.svg";
+
+import setSelected from "../../App";
 
 const icon = new L.Icon({
 	iconUrl: "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png",
@@ -41,7 +48,7 @@ function Dashboard({ data }) {
 	let height = data.RelativeHeight;
 	let servoDeployed = data.ServoParachuteStatus ? "Deployed" : "Not deployed";
 	let beeperEnabled = data.BeeperStatus ? "On" : "Off";
-	let position = [46.0569, 14.5058];
+	let position = [data.GPSCords.latitude, data.GPSCords.longitude];
 
 	const [servoStatus, setServoStatus] = useState(servoDeployed);
 	const [beeperStatus, setBeeperStatus] = useState(beeperEnabled);
@@ -74,8 +81,9 @@ function Dashboard({ data }) {
 							<h2>Pressure height</h2>
 							<p>{pressure} m</p>
 						</div>
-						<div>
+						<div className="changeable">
 							<h2>Initial height</h2>
+							<img src={settingsIcon} alt="Settings" onClick={setSelected("settings")} />
 							<p>735 m</p>
 						</div>
 					</div>
