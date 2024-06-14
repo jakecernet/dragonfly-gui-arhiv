@@ -3,9 +3,16 @@ import "./settings.css";
 import data from "../../Simulator.mjs";
 
 const Settings = () => {
+
+	const handleReset = () => {
+		localStorage.clear();
+		window.location.reload();
+	}
+
 	return (
 		<div className="settings">
 			<h1>Settings</h1>
+			<button className="reset_button" onClick={handleReset}>RESET SIMULATOR DATA</button>
 			<div className="units">
 				<div>
 					<h2>Speed unit</h2>

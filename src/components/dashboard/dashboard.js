@@ -1,24 +1,27 @@
 import { useState } from "react";
-
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "./dashboard.css";
 
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
-import settingsIcon from "../../icons/settings.svg";
 
+
+import settingsIcon from "../../icons/settings.svg";
+import locationMarker from "../../icons/location_marker.png";
 import setSelected from "../../App";
 
 const icon = new L.Icon({
-	iconUrl: "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png",
+	iconUrl: locationMarker,
 	iconSize: [50, 50],
 	popupAnchor: [-25, -35],
 	iconAnchor: [25, 50],
 });
+
+
+
 
 const circleDisplay = ({ value, unit, maxRange, color }) => {
 	return (
@@ -41,14 +44,16 @@ const circleDisplay = ({ value, unit, maxRange, color }) => {
 };
 
 function Dashboard({ data }) {
-	console.log(data);
 	let temperature = data.Temperature;
-	let pressure = data.Pressure;
-	let voltage = data.BatteryVoltage;
-	let height = data.RelativeHeight;
+	let PressureHeight = data.PressureHeight;
+	let voltage = (data.BatteryVoltage).toFixed(2);
+	let InitialHeight = data.InitialHeight;
+	let GPSHeight = data.GPSHeight;
+	let RelativeHeight = GPSHeight - InitialHeight;
 	let servoDeployed = data.ServoParachuteStatus ? "Deployed" : "Not deployed";
 	let beeperEnabled = data.BeeperStatus ? "On" : "Off";
 	let position = [data.GPSCords.latitude, data.GPSCords.longitude];
+
 
 	const [servoStatus, setServoStatus] = useState(servoDeployed);
 	const [beeperStatus, setBeeperStatus] = useState(beeperEnabled);
@@ -67,6 +72,12 @@ function Dashboard({ data }) {
 		setSelected("settings");
 	}
 
+	function ChangeView({ center }) {
+		const map = useMap();
+		map.panTo(center);
+		return null;
+	}
+
 	return (
 		<div className="dashboard">
 			<h1>Vehicle overview</h1>
@@ -75,27 +86,21 @@ function Dashboard({ data }) {
 					<div className="heights">
 						<div>
 							<h2>Relative height</h2>
-							<p>{height} m</p>
+							<p>{RelativeHeight} m</p>
 						</div>
 						<div>
 							<h2>GPS height</h2>
-							<p>735 m</p>
+							<p>{GPSHeight}</p>
 						</div>
 						<div>
 							<h2>Pressure height</h2>
-							<p>{pressure} m</p>
+							<p>{PressureHeight} m</p>
 						</div>
 						<div className="changeable">
 							<h2>Initial height</h2>
 							<img src={settingsIcon} alt="Settings" onClick={handleSettingsClick} />
-							<p>735 m</p>
+							<p>{InitialHeight}m</p>
 						</div>
-					</div>
-					<div>
-						<h2>GPS coordinates</h2>
-						<p>
-							{data.GPSCords.latitude}, {data.GPSCords.longitude}
-						</p>
 					</div>
 				</section>
 				<section className="main-four">
@@ -103,8 +108,8 @@ function Dashboard({ data }) {
 						{circleDisplay({
 							value: voltage,
 							unit: "V",
-							maxRange: 18,
-							color: voltage < 11 ? "red" : "rgb(43, 82, 189)",
+							maxRange: 5,
+							color: voltage < 2 ? "red" : "rgb(43, 82, 189)",
 						})}
 					</div>
 					<div className="parameter">
@@ -131,7 +136,7 @@ function Dashboard({ data }) {
 					<MapContainer
 						center={position}
 						zoom={20}
-						scrollWheelZoom={false}
+						scrollWheelZoom={true}
 						attributionControl={false}
 						preferCanvas={false}
 						style={{
@@ -139,12 +144,13 @@ function Dashboard({ data }) {
 							width: "85%",
 							borderRadius: "10px",
 							marginTop: "10px",
-						}}>
+						}}
+					>
 						<TileLayer
-							url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+							url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
 						/>
-						<Marker position={position} icon={icon}>
-						</Marker>
+						<Marker position={position} icon={icon}></Marker>
+						<ChangeView center={position} />
 					</MapContainer>
 				</section>
 			</div>

@@ -13,15 +13,20 @@ function getRandomGpsCoordinates() {
 function GetRandomTemperature() {
 	return 22 + Math.floor(Math.random() * 10 - 1);
 }
+function getInitialTime() {
+	return new Date().getTime() / 1000;
+}
+console.log(getInitialTime());
 
 let InitialInputData = {
+	initialTime: getInitialTime(),
 	GPSCords: getRandomGpsCoordinates(),
 	PressureHeight: 870,
 	GPSHeight: 860,
 	RelativeHeight: 0,
 	InitialHeight: 860,
 	Pressure: 2,
-	BatteryVoltage: parseInt(Math.random() * 100).toFixed(2),
+	BatteryVoltage: 5,
 	Temperature: GetRandomTemperature(),
 	AccelerationX: 0,
 	AccelerationY: 0,
@@ -37,29 +42,44 @@ let InitialInputData = {
 	TimeUnit: "s",
 };
 
-if (localStorage.getItem("data") === null) {
-	localStorage.setItem("data", JSON.stringify(InitialInputData));
-}
 
-console.log(GetData());
+
 
 function GetData() {
-	const data = JSON.parse(localStorage.getItem("data"));
+	if (localStorage.getItem("data") === null) {
+		localStorage.setItem("data", JSON.stringify(InitialInputData));
+	}
 
-	data.GPSCords = getRandomGpsCoordinates();
-	data.PressureHeight += Math.floor(Math.random() * 10 - 1);
-	data.GPSHeight += Math.floor(Math.random() * 10);
+	let data = JSON.parse(localStorage.getItem("data"));
+
+	if (data.GPSHeight > 1100 ){
+		data = InitialInputData;
+
+	}
+	else {
+		data.GPSCords.latitude += Math.random() * 0.00001;
+	data.GPSCords.longitude += Math.random() * 0.00001;
+	data.GPSHeight += Math.floor(Math.random() * 3);
+	data.PressureHeight = data.GPSHeight + 14;
 	data.RelativeHeight = data.GPSHeight - data.InitialHeight;
 	data.Pressure -= Math.floor(Math.random() + 0.01);
-	data.BatteryVoltage = parseInt(1243 * 0.01 + Math.random(2)).toFixed(2);
+	}
+
+	
+
+	if(data.BatteryVoltage > 0.1) {
+		data.BatteryVoltage -= 0.0001;
+
+	}
+
 	data.Temperature = data.Temperature - Math.floor(Math.random() * 0.02);
 	data.AccelerationX = Math.floor(Math.random() * 100);
 	data.AccelerationY = Math.floor(Math.random() * 100);
 	data.AccelerationZ = Math.floor(Math.random() * 100);
 	data.Armed = Math.random() > 0.5;
 	data.InFlight = Math.random() > 0.5;
-	data.FlightTime += 1;
-	data.Uptime += 1;
+	data.FlightTime = getInitialTime() - data.initialTime;
+	data.Uptime = getInitialTime() - data.initialTime;
 	data.speedUnit = "km/h";
 	data.PressureUnit = "Bar";
 	data.TimeUnit = "s";
