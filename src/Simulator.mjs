@@ -1,10 +1,8 @@
 function getRandomGpsCoordinates() {
 	// Latitude ranges from -90 to 90
-	const lat = 46.0569;
-
-
-	// Longitude ranges from -180 to 180
-	const lon = 14.5058;
+	const lat = 46.11775450274306;
+	
+	const lon = 14.022392745016298;
 
 	return {
 		latitude: lat,
@@ -44,14 +42,7 @@ console.log(GetData());
 function GetData() {
 	const data = JSON.parse(localStorage.getItem("data"));
 
-	data.GPSCords.latitude = (
-		parseFloat(data.GPSCords.latitude) +
-		(Math.random() * 0.0001 - 0.00005)
-	).toFixed(6);
-	data.GPSCords.longitude = (
-		parseFloat(data.GPSCords.longitude) +
-		(Math.random() * 0.0001 - 0.00005)
-	).toFixed(6);
+	data.GPSCords = getRandomGpsCoordinates();
 	data.PressureHeight += Math.floor(Math.random() * 10 - 1);
 	data.GPSHeight += Math.floor(Math.random() * 10);
 	data.RelativeHeight = data.GPSHeight - data.InitialHeight;

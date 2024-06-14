@@ -126,8 +126,10 @@ function Dashboard({ data }) {
 				<section className="map">
 					<MapContainer
 						center={position}
-						zoom={13}
+						zoom={20}
 						scrollWheelZoom={false}
+						attributionControl={false}
+						preferCanvas={false}
 						style={{
 							height: "100%",
 							width: "85%",
@@ -136,11 +138,8 @@ function Dashboard({ data }) {
 						}}>
 						<TileLayer
 							url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-							attribution='&copy; <a href="https://www.openstreetmap.org/copyright">
-						OpenStreetMap</a> contributors'
 						/>
 						<Marker position={position} icon={icon}>
-							<Popup>Vehicle position</Popup>
 						</Marker>
 					</MapContainer>
 				</section>
