@@ -71,7 +71,7 @@
 
 .changeable img:hover {
     cursor: pointer;
-    rotate: 180deg;
+    rotate: 20deg;
 }
 
 .text div {
