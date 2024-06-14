@@ -57,8 +57,8 @@ function App() {
 					</h2>
 				</div>
 				<div className="right">
-					<h2>Flight time: 00 : 00 : 12</h2>
-					<h2>Uptime: 00 : 34 : 12</h2>
+					<h2>Flight time: {(displayData.FlightTime).toFixed(1)}</h2>
+					<h2>Uptime: {(displayData.Uptime).toFixed(1)}</h2>
 				</div>
 			</div>
 			<div className="content">
