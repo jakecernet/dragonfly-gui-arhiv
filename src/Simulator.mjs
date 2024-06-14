@@ -2,7 +2,6 @@ function getRandomGpsCoordinates() {
 	// Latitude ranges from -90 to 90
 	const lat = 46.0569;
 
-
 	// Longitude ranges from -180 to 180
 	const lon = 14.5058;
 
@@ -34,6 +33,9 @@ let InitialInputData = {
 	InFlight: Math.random() > 0.5,
 	FlightTime: 0,
 	Uptime: 0,
+	speedUnit: "km/h",
+	PressureUnit: "Bar",
+	TimeUnit: "s",
 };
 
 if (localStorage.getItem("data") === null) {
@@ -41,6 +43,7 @@ if (localStorage.getItem("data") === null) {
 }
 
 console.log(GetData());
+
 function GetData() {
 	const data = JSON.parse(localStorage.getItem("data"));
 
@@ -65,6 +68,9 @@ function GetData() {
 	data.InFlight = Math.random() > 0.5;
 	data.FlightTime += 1;
 	data.Uptime += 1;
+	data.speedUnit = "km/h";
+	data.PressureUnit = "Bar";
+	data.TimeUnit = "s";
 
 	localStorage.setItem("data", JSON.stringify(data));
 

@@ -63,6 +63,10 @@ function Dashboard({ data }) {
 		setBeeperStatus(beeperStatus === "On" ? "Off" : "On");
 	};
 
+	function handleSettingsClick() {
+		setSelected("settings");
+	}
+
 	return (
 		<div className="dashboard">
 			<h1>Vehicle overview</h1>
@@ -83,7 +87,7 @@ function Dashboard({ data }) {
 						</div>
 						<div className="changeable">
 							<h2>Initial height</h2>
-							<img src={settingsIcon} alt="Settings" onClick={setSelected("settings")} />
+							<img src={settingsIcon} alt="Settings" onClick={handleSettingsClick} />
 							<p>735 m</p>
 						</div>
 					</div>

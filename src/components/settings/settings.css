@@ -10,3 +10,25 @@
     margin-top: 40px;
     font-weight: 200;
 }
+
+.units {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    flex-direction: column;
+}
+
+.units div {
+    margin: 0 10px;
+    color: #fff;
+}
+
+.units div h2 {
+    font-size: 1.5rem;
+    font-weight: 200;
+}
+
+.units div p {
+    font-size: 1.2rem;
+    font-weight: 200;
+}
