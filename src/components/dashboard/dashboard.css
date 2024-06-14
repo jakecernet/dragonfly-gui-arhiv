@@ -62,18 +62,6 @@
     gap: 20px;
 }
 
-.changeable img {
-    width: 30px;
-    height: 30px;
-    filter: invert(1);
-    transition: 0.3s ease;
-}
-
-.changeable img:hover {
-    cursor: pointer;
-    rotate: 20deg;
-}
-
 .text div {
     width: 100%;
     display: flex;
@@ -94,6 +82,23 @@
     color: #fff;
     font-size: 1.4rem;
     font-weight: 150;
+}
+
+.initButton {
+    width: 300px!important;
+    background: #dddddd0c!important;
+    justify-content: center!important;
+    transition: 0.3s;
+}
+
+.initButton:hover {
+    background: #8d8d8d5b!important;
+    cursor: pointer;
+}
+
+.initButton a {
+    color: #fff;
+    font-weight: 200;
 }
 
 .parameters .parameter {
