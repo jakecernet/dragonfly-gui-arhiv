@@ -1,7 +1,7 @@
 function getRandomGpsCoordinates() {
 	// Latitude ranges from -90 to 90
 	const lat = 46.11775450274306;
-	
+
 	const lon = 14.022392745016298;
 
 	return {
@@ -42,9 +42,6 @@ let InitialInputData = {
 	TimeUnit: "s",
 };
 
-
-
-
 function GetData() {
 	if (localStorage.getItem("data") === null) {
 		localStorage.setItem("data", JSON.stringify(InitialInputData));
@@ -52,24 +49,19 @@ function GetData() {
 
 	let data = JSON.parse(localStorage.getItem("data"));
 
-	if (data.GPSHeight > 1100 ){
+	if (data.GPSHeight > 1100) {
 		data = InitialInputData;
-
-	}
-	else {
+	} else {
 		data.GPSCords.latitude += Math.random() * 0.00001;
-	data.GPSCords.longitude += Math.random() * 0.00001;
-	data.GPSHeight += Math.floor(Math.random() * 3);
-	data.PressureHeight = data.GPSHeight + 14;
-	data.RelativeHeight = data.GPSHeight - data.InitialHeight;
-	data.Pressure -= Math.floor(Math.random() + 0.01);
+		data.GPSCords.longitude += Math.random() * 0.00001;
+		data.GPSHeight += Math.floor(Math.random() * 3);
+		data.PressureHeight = data.GPSHeight + 14;
+		data.RelativeHeight = data.GPSHeight - data.InitialHeight;
+		data.Pressure -= Math.floor(Math.random() + 0.01);
 	}
 
-	
-
-	if(data.BatteryVoltage > 0.1) {
+	if (data.BatteryVoltage > 0.1) {
 		data.BatteryVoltage -= 0.0001;
-
 	}
 
 	data.Temperature = data.Temperature - Math.floor(Math.random() * 0.02);
