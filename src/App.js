@@ -16,6 +16,7 @@ let vehicleStatus = "Armed";
 function App() {
 	const [selected, setSelected] = useState("dashboard");
 	const [displayData, setDisplayData] = useState(GetData());
+	const [flightNumber, setFlightNumber] = useState("");
 
 	useEffect(() => {
 		const interval = setInterval(() => {
@@ -26,8 +27,46 @@ function App() {
 		return () => clearInterval(interval);
 	}, []);
 
+	const handleKeyPress = (event) => {
+		if (event.key === "Enter") {
+			const newFlightNumber = flightNumber.trim();
+			if (newFlightNumber !== "") {
+				const existingFlightNumbers = document.cookie
+					.split(";")
+					.map((cookie) => cookie.trim().split("=")[0]);
+				if (!existingFlightNumbers.includes("flightNumber")) {
+					document.cookie = `flightNumber=${newFlightNumber}; path=/;`;
+				} else {
+					const existingFlightNumber = document.cookie
+						.split(";")
+						.find((cookie) =>
+							cookie.trim().startsWith("flightNumber")
+						)
+						.split("=")[1];
+					document.cookie = `flightNumber=${existingFlightNumber},${newFlightNumber}; path=/;`;
+				}
+			}
+			setFlightNumber("");
+			document.querySelector(".overlay").style.display = "none";
+		}
+	};
+
 	return (
 		<div className="App">
+			<div className="overlay">
+				<div className="box">
+					<h2>Enter flight number</h2>
+					<input
+						type="text"
+						placeholder="06532345"
+						value={flightNumber}
+						onChange={(event) =>
+							setFlightNumber(event.target.value)
+						}
+						onKeyPress={handleKeyPress}
+					/>
+				</div>
+			</div>
 			<nav>
 				<ul>
 					<li onClick={() => setSelected("dashboard")}>
@@ -57,8 +96,8 @@ function App() {
 					</h2>
 				</div>
 				<div className="right">
-					<h2>Flight time: {(displayData.FlightTime).toFixed(1)}</h2>
-					<h2>Uptime: {(displayData.Uptime).toFixed(1)}</h2>
+					<h2>Flight time: {displayData.FlightTime.toFixed(1)}</h2>
+					<h2>Uptime: {displayData.Uptime.toFixed(1)}</h2>
 				</div>
 			</div>
 			<div className="content">

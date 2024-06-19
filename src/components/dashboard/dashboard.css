@@ -155,3 +155,7 @@
     justify-content: center;
     align-items: center;
 }
+
+.leaflet-top{
+    z-index: 500!important;
+}
