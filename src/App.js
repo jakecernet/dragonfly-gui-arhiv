@@ -27,7 +27,6 @@ function App() {
 		return () => clearInterval(interval);
 	}, []);
 
-
 	const handleKeyPress = (event) => {
 		if (event.key === "Enter") {
 			const newFlightNumber = flightNumber.trim();
@@ -50,7 +49,6 @@ function App() {
 			setFlightNumber("");
 			document.querySelector(".overlay").style.display = "none";
 		}
-
 	};
 
 	return (
@@ -60,7 +58,6 @@ function App() {
 					<h2>Enter flight number</h2>
 					<div className="div_organize">
 						<input
-							className="input_flight_number"
 							type="text"
 							value={flightNumber}
 							onChange={(event) =>

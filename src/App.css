@@ -46,20 +46,15 @@ body {
   font-family: Bungee;
 }
 
-
-.div_organize{
+.div_organize {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
   align-items: center;
+  justify-content: center;
   padding: 10%;
-  width: 100%;
-
 }
 
 .box input {
-  width: min-content;
-  margin: 10px 0;
   border: none;
   background: transparent;
   outline: none;
@@ -68,21 +63,26 @@ body {
   font-size: 1.4rem;
   font-family: Bungee;
   caret-color: transparent;
+  text-align: right;
+  width: 30%;
 }
 
-.fat_cursor{
+.fat_cursor {
   width: 0.84rem;
   height: 1.6rem;
   background-color: silver;
   animation: blink 0.9s infinite;
-
 }
 
 @keyframes blink {
-  0%, 49% {
+
+  0%,
+  49% {
     opacity: 1;
   }
-  50%, 100% {
+
+  50%,
+  100% {
     opacity: 0;
   }
 }
@@ -193,7 +193,6 @@ nav ul li a img {
 
 /* Content */
 
-.content{
+.content {
   margin-top: -100px;
 }
-
