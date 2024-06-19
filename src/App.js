@@ -27,6 +27,7 @@ function App() {
 		return () => clearInterval(interval);
 	}, []);
 
+
 	const handleKeyPress = (event) => {
 		if (event.key === "Enter") {
 			const newFlightNumber = flightNumber.trim();
@@ -49,6 +50,7 @@ function App() {
 			setFlightNumber("");
 			document.querySelector(".overlay").style.display = "none";
 		}
+
 	};
 
 	return (
@@ -56,15 +58,18 @@ function App() {
 			<div className="overlay">
 				<div className="box">
 					<h2>Enter flight number</h2>
-					<input
-						type="text"
-						placeholder="06532345"
-						value={flightNumber}
-						onChange={(event) =>
-							setFlightNumber(event.target.value)
-						}
-						onKeyPress={handleKeyPress}
-					/>
+					<div className="div_organize">
+						<input
+							className="input_flight_number"
+							type="text"
+							value={flightNumber}
+							onChange={(event) =>
+								setFlightNumber(event.target.value)
+							}
+							onKeyPress={handleKeyPress}
+						/>
+						<div className="fat_cursor"></div>
+					</div>
 				</div>
 			</div>
 			<nav>
