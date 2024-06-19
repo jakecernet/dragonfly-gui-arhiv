@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./App.css";
 
 import dashboardIcon from "./icons/dashboard.svg";
@@ -17,6 +17,14 @@ function App() {
 	const [selected, setSelected] = useState("dashboard");
 	const [displayData, setDisplayData] = useState(GetData());
 	const [flightNumber, setFlightNumber] = useState("");
+	const inputRef = useRef(null);
+
+	useEffect(() => {
+		if (flightNumber.length > 10) {
+			setFlightNumber(flightNumber.slice(0, 10));
+		}
+	}, [flightNumber]);
+
 
 	useEffect(() => {
 		const interval = setInterval(() => {
@@ -26,6 +34,12 @@ function App() {
 
 		return () => clearInterval(interval);
 	}, []);
+
+	useEffect(() => {
+        if (inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, []);
 
 	const handleKeyPress = (event) => {
 		if (event.key === "Enter") {
@@ -51,19 +65,32 @@ function App() {
 		}
 	};
 
+	const handleInputChange = (event) => {
+		setFlightNumber(event.target.value);
+		if (inputRef.current) {
+			inputRef.current.style.width = `${event.target.value.length + 1}ch`;
+		}
+	};
+	useEffect(() => {if (flightNumber.length === 0) {
+			inputRef.current.style.width = "17ch";
+		}
+	}
+	, [flightNumber]);
+
+
 	return (
 		<div className="App">
 			<div className="overlay">
 				<div className="box">
-					<h2>Enter flight number</h2>
 					<div className="div_organize">
 						<input
+							ref={inputRef}
 							type="text"
+							placeholder="Enter flight number"
 							value={flightNumber}
-							onChange={(event) =>
-								setFlightNumber(event.target.value)
-							}
+							onChange={handleInputChange}
 							onKeyPress={handleKeyPress}
+							style={{ width: `${flightNumber.length + 1}ch` }}
 						/>
 						<div className="fat_cursor"></div>
 					</div>
