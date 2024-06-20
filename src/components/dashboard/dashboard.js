@@ -46,7 +46,11 @@ function Dashboard({ data }) {
 	let servoDeployed = data.ServoParachuteStatus ? "Deployed" : "Not deployed";
 	let beeperEnabled = data.BeeperStatus ? "On" : "Off";
 	let position = [data.GPSCords.latitude, data.GPSCords.longitude];
-	let positionShort = [data.GPSCords.latitude.toFixed(6), ", ", data.GPSCords.longitude.toFixed(6)];
+	let positionShort = [
+		data.GPSCords.latitude.toFixed(6),
+		", ",
+		data.GPSCords.longitude.toFixed(6),
+	];
 
 	const [servoStatus, setServoStatus] = useState(servoDeployed);
 	const [beeperStatus, setBeeperStatus] = useState(beeperEnabled);
@@ -100,13 +104,13 @@ function Dashboard({ data }) {
 							<h2>Initial GPS cords</h2>
 							<p>{InitialGPS}</p>
 						</div>
-					</div>
-					<div
-						className="initButton"
-						onClick={() => {
-							setInitial();
-						}}>
-						<a>Set current height and GPS as initial</a>
+						<div
+							className="initButton"
+							onClick={() => {
+								setInitial();
+							}}>
+							<a>Set current height and GPS as initial</a>
+						</div>
 					</div>
 				</section>
 				<section className="main-four">
