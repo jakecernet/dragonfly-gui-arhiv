@@ -11,13 +11,12 @@ import Settings from "./components/settings/settings";
 
 import GetData from "./Simulator.mjs";
 
-let vehicleStatus = "Ready";
-
 function App() {
 	const [selected, setSelected] = useState("dashboard");
 	const [displayData, setDisplayData] = useState(GetData());
 	const [flightNumber, setFlightNumber] = useState("");
 	const inputRef = useRef(null);
+	const [vehicleStatus, setVehicleStatus] = useState("Ready");
 
 	useEffect(() => {
 		if (flightNumber.length > 10) {

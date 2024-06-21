@@ -152,6 +152,9 @@ function Dashboard({ data }) {
 							<p>{beeperStatus}</p>
 						</div>
 					</div>
+					<div className="launch" onClick={() => alert("Launching!")}>
+						<button>Launch</button>
+					</div>
 				</section>
 				<section>
 					<MapContainer
