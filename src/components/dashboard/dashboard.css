@@ -14,14 +14,12 @@
 .parameters {
     width: 100%;
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    margin-top: 60px;
+    margin-top: 120px;
     flex-wrap: wrap;
 }
 
 .parameters section {
-    width: 33%;
+    width: 33.3%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -62,6 +60,42 @@
     gap: 20px;
 }
 
+.init div {
+    background: transparent!important;
+    padding: 0!important;
+}
+
+.init div span{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-right: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    background: #1b1b1b8f;
+}
+
+.init div button {
+    background: #1b1b1b8f;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    transition: 0.2s;
+}
+
+.init div button:hover {
+    background: #8d8d8d5b;
+    cursor: pointer;
+}
+
+.init div button img {
+    width: 30px;
+    height: 30px;
+    filter: invert(1);
+}
+
 .text div {
     width: 100%;
     display: flex;
@@ -84,27 +118,10 @@
     font-weight: 150;
 }
 
-.initButton {
-    width: 300px!important;
-    background: #dddddd0c!important;
-    justify-content: center!important;
-    transition: 0.3s;
-}
-
-.initButton:hover {
-    background: #8d8d8d5b!important;
-    cursor: pointer;
-}
-
-.initButton a {
-    color: #fff;
-    font-weight: 200;
-}
-
 .parameters .parameter {
     background: #1b1b1b5b;
-    width: 200px;
-    height: 200px;
+    width: 220px;
+    height: 220px;
     border-radius: 10px;
     display: flex;
     justify-content: center;
@@ -141,21 +158,21 @@
 }
 
 .main-four {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
     margin: auto;
     flex-wrap: wrap;
-    gap: 40px;
+    gap: 20px;
 }
 
-.map {
-    height: 400px;
+.vodoravno{
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: row;
+    gap: 20px;
 }
 
 .leaflet-top{
     z-index: 500!important;
+}
+
+.leaflet-container {
+    margin-top: 0!important;
 }

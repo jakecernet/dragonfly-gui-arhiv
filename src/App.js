@@ -11,7 +11,7 @@ import Settings from "./components/settings/settings";
 
 import GetData from "./Simulator.mjs";
 
-let vehicleStatus = "Armed";
+let vehicleStatus = "Ready";
 
 function App() {
 	const [selected, setSelected] = useState("dashboard");
@@ -25,7 +25,6 @@ function App() {
 		}
 	}, [flightNumber]);
 
-
 	useEffect(() => {
 		const interval = setInterval(() => {
 			const newData = GetData();
@@ -36,12 +35,22 @@ function App() {
 	}, []);
 
 	useEffect(() => {
-        if (inputRef.current) {
-            inputRef.current.focus();
-        }
-    }, []);
+		if (inputRef.current) {
+			inputRef.current.focus();
+		}
+	}, []);
 
-	const handleKeyPress = (event) => {
+	useEffect(() => {
+		if (vehicleStatus === "Armed") {
+			document.body.classList.toggle("armed", true);
+			document.body.classList.toggle("ready", false);
+		} else {
+			document.body.classList.toggle("armed", false);
+			document.body.classList.toggle("ready", true);
+		}
+	}, [vehicleStatus]);
+
+	/* const handleKeyPress = (event) => {
 		if (event.key === "Enter") {
 			const newFlightNumber = flightNumber.trim();
 			if (newFlightNumber !== "") {
@@ -71,16 +80,15 @@ function App() {
 			inputRef.current.style.width = `${event.target.value.length + 1}ch`;
 		}
 	};
-	useEffect(() => {if (flightNumber.length === 0) {
+	useEffect(() => {
+		if (flightNumber.length === 0) {
 			inputRef.current.style.width = "17ch";
 		}
-	}
-	, [flightNumber]);
-
+	}, [flightNumber]); */
 
 	return (
 		<div className="App">
-			<div className="overlay">
+			{/* <div className="overlay">
 				<div className="box">
 					<div className="div_organize">
 						<input
@@ -95,7 +103,7 @@ function App() {
 						<div className="fat_cursor"></div>
 					</div>
 				</div>
-			</div>
+			</div> */}
 			<nav>
 				<ul>
 					<li onClick={() => setSelected("dashboard")}>
@@ -121,7 +129,16 @@ function App() {
 			<div className="status">
 				<div className="left">
 					<h2>
-						Vehicle status: <span>{vehicleStatus}</span>
+						Vehicle status:{" "}
+						<span
+							style={{
+								background:
+									vehicleStatus === "Ready"
+										? "rgba(0, 255, 0, 0.445)"
+										: "#46020242",
+							}}>
+							{vehicleStatus}
+						</span>
 					</h2>
 				</div>
 				<div className="right">

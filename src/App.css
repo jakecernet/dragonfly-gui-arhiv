@@ -6,11 +6,18 @@
   scroll-behavior: smooth;
 }
 
-body {
-  background: linear-gradient(#010005, #191c22);
+.ready {
+  background: linear-gradient(#010005, #192220);
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-size: cover;
+  background-size: cover
+}
+
+.armed {
+  background: linear-gradient(#010005, #221919);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover
 }
 
 /* Overlay */
@@ -66,7 +73,7 @@ body {
   caret-color: transparent;
   text-align: right;
   min-width: 1ch;
-max-width: 30ch;
+  max-width: 30ch;
 }
 
 .fat_cursor {
@@ -166,7 +173,7 @@ nav ul li a img {
 }
 
 .status .left h2 {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: 200;
   display: flex;
   flex-direction: row;
@@ -177,21 +184,20 @@ nav ul li a img {
 .status .left h2 span {
   width: 160px;
   text-align: center;
-  background: #4602025b;
   padding: 10px;
   border-radius: 10px;
   text-transform: uppercase;
 }
 
 .status .right {
-  flex-direction: column;
   align-items: center;
   gap: 5px;
   margin-top: -5px;
+  width: 350px;
 }
 
 .status .right h2 {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 200;
 }
 

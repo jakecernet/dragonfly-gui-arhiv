@@ -8,6 +8,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
 import locationMarker from "../../icons/location_marker.png";
+import settingsIcon from "../../icons/settings.svg";
 
 const icon = new L.Icon({
 	iconUrl: locationMarker,
@@ -71,14 +72,9 @@ function Dashboard({ data }) {
 		return null;
 	}
 
-	const setInitial = () => {
-		setInitialHeight(GPSHeight);
-		setInitialGPS(positionShort);
-	};
-
 	return (
 		<div className="dashboard">
-			<h1>Vehicle overview</h1>
+			<h1>Flight {data.FlightNumber}</h1>
 			<div className="parameters">
 				<section className="text">
 					<div className="heights">
@@ -95,41 +91,56 @@ function Dashboard({ data }) {
 							<p>{PressureHeight} m</p>
 						</div>
 					</div>
-					<div className="heights">
+					<div className="heights init">
 						<div>
-							<h2>Initial height</h2>
-							<p>{InitialHeight} m</p>
+							<span>
+								<h2>Initial height</h2>
+								<p>{InitialHeight} m</p>
+							</span>
+							<button
+								title="Set initial height"
+								onClick={() => {
+									setInitialHeight(GPSHeight);
+								}}>
+								<img src={settingsIcon} alt="Settings" />
+							</button>
 						</div>
 						<div>
-							<h2>Initial GPS cords</h2>
-							<p>{InitialGPS}</p>
-						</div>
-						<div
-							className="initButton"
-							onClick={() => {
-								setInitial();
-							}}>
-							<a>Set current height and GPS as initial</a>
+							<span>
+								<h2>Initial GPS cords</h2>
+								<p>{InitialGPS}</p>
+							</span>
+							<button
+								title="Set initial GPS coordinates"
+								onClick={() => {
+									setInitialGPS(positionShort);
+								}}>
+								<img src={settingsIcon} alt="Settings" />
+							</button>
 						</div>
 					</div>
 				</section>
 				<section className="main-four">
-					<div className="parameter">
-						{circleDisplay({
-							value: voltage,
-							unit: "V",
-							maxRange: 5,
-							color: voltage < 2 ? "red" : "rgb(43, 82, 189)",
-						})}
-					</div>
-					<div className="parameter">
-						{circleDisplay({
-							value: temperature,
-							unit: "°C",
-							maxRange: 50,
-							color:
-								temperature > 40 ? "red" : "rgb(43, 82, 189)",
-						})}
+					<div className="vodoravno">
+						<div className="parameter">
+							{circleDisplay({
+								value: voltage,
+								unit: "V",
+								maxRange: 5,
+								color: voltage < 2 ? "red" : "rgb(43, 82, 189)",
+							})}
+						</div>
+						<div className="parameter">
+							{circleDisplay({
+								value: temperature,
+								unit: "°C",
+								maxRange: 50,
+								color:
+									temperature > 40
+										? "red"
+										: "rgb(43, 82, 189)",
+							})}
+						</div>
 					</div>
 					<div className="text settingsDash">
 						<div onClick={handleServoClick}>
@@ -142,7 +153,7 @@ function Dashboard({ data }) {
 						</div>
 					</div>
 				</section>
-				<section className="map">
+				<section>
 					<MapContainer
 						center={position}
 						zoom={20}
