@@ -40,12 +40,12 @@ function App() {
 	}, []);
 
 	useEffect(() => {
-		if (vehicleStatus === "Armed") {
-			document.body.classList.toggle("armed", true);
-			document.body.classList.toggle("ready", false);
-		} else {
+		if (vehicleStatus === "Ready") {
 			document.body.classList.toggle("armed", false);
 			document.body.classList.toggle("ready", true);
+		} else {
+			document.body.classList.toggle("armed", true);
+			document.body.classList.toggle("ready", false);
 		}
 	}, [vehicleStatus]);
 
@@ -146,7 +146,13 @@ function App() {
 				</div>
 			</div>
 			<div className="content">
-				{selected === "dashboard" && <Dashboard data={displayData} />}
+				{selected === "dashboard" && (
+					<Dashboard
+						data={displayData}
+						setVehicleStatus={setVehicleStatus}
+						vehicleStatus={vehicleStatus}
+					/>
+				)}
 				{selected === "analysis" && <Analysis data={displayData} />}
 				{selected === "settings" && <Settings data={displayData} />}
 			</div>

@@ -36,7 +36,7 @@ const circleDisplay = ({ value, unit, maxRange, color }) => {
 	);
 };
 
-function Dashboard({ data }) {
+function Dashboard({ data, setVehicleStatus, vehicleStatus }) {
 	const [InitialHeight, setInitialHeight] = useState("N/A");
 	const [InitialGPS, setInitialGPS] = useState("N/A");
 	let temperature = data.Temperature;
@@ -71,6 +71,26 @@ function Dashboard({ data }) {
 		map.panTo(center);
 		return null;
 	}
+
+	const toggleArm = () => {
+		if (vehicleStatus === "Launched") {
+			return;
+		} else {
+			if (vehicleStatus === "Ready") {
+				setVehicleStatus("Armed");
+			} else {
+				setVehicleStatus("Ready");
+			}
+		}
+	};
+
+	const launchVehicle = () => {
+		if (vehicleStatus === "Armed") {
+			setVehicleStatus("Launched");
+		} else {
+			return;
+		}
+	};
 
 	return (
 		<div className="dashboard">
@@ -152,8 +172,39 @@ function Dashboard({ data }) {
 							<p>{beeperStatus}</p>
 						</div>
 					</div>
-					<div className="launch" onClick={() => alert("Launching!")}>
-						<button>Launch</button>
+					<div className="vodoravno">
+						<div
+							className="launch"
+							onClick={() => toggleArm()}
+							style={{
+								opacity: vehicleStatus === "Launched" ? 0.2 : 1,
+							}}>
+							<button
+								style={{
+									cursor:
+										vehicleStatus === "Launched"
+											? "not-allowed"
+											: "pointer",
+								}}>
+								Arm
+							</button>
+						</div>
+						<div
+							className="launch"
+							onClick={() => launchVehicle()}
+							style={{
+								opacity: vehicleStatus === "Armed" ? 1 : 0.2,
+							}}>
+							<button
+								style={{
+									cursor:
+										vehicleStatus === "Armed"
+											? "pointer"
+											: "not-allowed",
+								}}>
+								Launch
+							</button>
+						</div>
 					</div>
 				</section>
 				<section>
