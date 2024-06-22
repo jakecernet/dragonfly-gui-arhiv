@@ -1,7 +1,5 @@
 import "./settings.css";
 
-import data from "../../Simulator.mjs";
-
 const Settings = () => {
 
 	const handleReset = () => {
@@ -16,15 +14,27 @@ const Settings = () => {
 			<div className="units">
 				<div>
 					<h2>Speed unit</h2>
-					<p>{data.speedUnit}</p>
+					<select>
+						<option value="m/s">m/s</option>
+						<option value="km/h">km/h</option>
+						<option value="mph">mph</option>
+					</select>
 				</div>
 				<div>
 					<h2>Pressure unit</h2>
-					<p>{data.PressureUnit}</p>
+					<select>
+						<option value="Pa">Pa</option>
+						<option value="hPa">hPa</option>
+						<option value="bar">bar</option>
+					</select>
 				</div>
 				<div>
 					<h2>Time unit</h2>
-					<p>{data.TimeUnit}</p>
+					<select>
+						<option value="s">s</option>
+						<option value="min">min</option>
+						<option value="h">h</option>
+					</select>
 				</div>
 			</div>
 		</div>
