@@ -165,7 +165,8 @@ nav ul li a img {
 }
 
 .status .left,
-.status .right {
+.status .right,
+.status .center{
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -189,6 +190,11 @@ nav ul li a img {
   text-transform: uppercase;
 }
 
+.status .center h1{
+  font-size: 2.4rem;
+  font-weight: 200;
+}
+
 .status .right {
   align-items: center;
   gap: 5px;
@@ -199,10 +205,4 @@ nav ul li a img {
 .status .right h2 {
   font-size: 1.4rem;
   font-weight: 200;
-}
-
-/* Content */
-
-.content {
-  margin-top: -100px;
 }

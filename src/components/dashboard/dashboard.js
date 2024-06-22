@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { MapContainer, TileLayer, Marker, useMap } from "react-leaflet";
 import "./dashboard.css";
 
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+
+import { MapContainer, TileLayer, Marker, useMap } from "react-leaflet";
 import "react-circular-progressbar/dist/styles.css";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
@@ -94,120 +95,119 @@ function Dashboard({ data, setVehicleStatus, vehicleStatus }) {
 
 	return (
 		<div className="dashboard">
-			<h1>Flight {data.FlightNumber}</h1>
-			<div className="parameters">
-				<section className="text">
-					<div className="heights">
-						<div>
-							<h2>Relative height</h2>
-							<p>{RelativeHeight} m</p>
-						</div>
-						<div>
-							<h2>GPS height</h2>
-							<p>{GPSHeight} m</p>
-						</div>
-						<div>
-							<h2>Pressure height</h2>
-							<p>{PressureHeight} m</p>
-						</div>
+			<section className="text">
+				<div className="heights">
+					<div>
+						<h2>Relative height</h2>
+						<p>{RelativeHeight} m</p>
 					</div>
-					<div className="heights init">
-						<div>
-							<span>
-								<h2>Initial height</h2>
-								<p>{InitialHeight} m</p>
-							</span>
-							<button
-								title="Set initial height"
-								onClick={() => {
-									setInitialHeight(GPSHeight);
-								}}>
-								<img src={settingsIcon} alt="Settings" />
-							</button>
-						</div>
-						<div>
-							<span>
-								<h2>Initial GPS cords</h2>
-								<p>{InitialGPS}</p>
-							</span>
-							<button
-								title="Set initial GPS coordinates"
-								onClick={() => {
-									setInitialGPS(positionShort);
-								}}>
-								<img src={settingsIcon} alt="Settings" />
-							</button>
-						</div>
+					<div>
+						<h2>GPS height</h2>
+						<p>{GPSHeight} m</p>
 					</div>
-				</section>
-				<section className="main-four">
-					<div className="vodoravno">
-						<div className="parameter">
-							{circleDisplay({
-								value: voltage,
-								unit: "V",
-								maxRange: 5,
-								color: voltage < 2 ? "red" : "rgb(43, 82, 189)",
-							})}
-						</div>
-						<div className="parameter">
-							{circleDisplay({
-								value: temperature,
-								unit: "°C",
-								maxRange: 50,
-								color:
-									temperature > 40
-										? "red"
-										: "rgb(43, 82, 189)",
-							})}
-						</div>
+					<div>
+						<h2>Pressure height</h2>
+						<p>{PressureHeight} m</p>
 					</div>
-					<div className="text settingsDash">
-						<div onClick={handleServoClick}>
-							<h2>Servo status</h2>
-							<p>{servoStatus}</p>
-						</div>
-						<div onClick={handleBeeperClick}>
-							<h2>Beeper</h2>
-							<p>{beeperStatus}</p>
-						</div>
-					</div>
-					<div className="vodoravno">
-						<div
-							className="launch"
-							onClick={() => toggleArm()}
-							style={{
-								opacity: vehicleStatus === "Launched" ? 0.2 : 1,
+				</div>
+				<div className="heights init">
+					<div>
+						<span>
+							<h2>Initial height</h2>
+							<p>{InitialHeight} m</p>
+						</span>
+						<button
+							title="Set initial height"
+							onClick={() => {
+								setInitialHeight(GPSHeight);
 							}}>
-							<button
-								style={{
-									cursor:
-										vehicleStatus === "Launched"
-											? "not-allowed"
-											: "pointer",
-								}}>
-								Arm
-							</button>
-						</div>
-						<div
-							className="launch"
-							onClick={() => launchVehicle()}
-							style={{
-								opacity: vehicleStatus === "Armed" ? 1 : 0.2,
-							}}>
-							<button
-								style={{
-									cursor:
-										vehicleStatus === "Armed"
-											? "pointer"
-											: "not-allowed",
-								}}>
-								Launch
-							</button>
-						</div>
+							<img src={settingsIcon} alt="Settings" />
+						</button>
 					</div>
-				</section>
-				<section>
+					<div>
+						<span>
+							<h2>Initial GPS cords</h2>
+							<p>{InitialGPS}</p>
+						</span>
+						<button
+							title="Set initial GPS coordinates"
+							onClick={() => {
+								setInitialGPS(positionShort);
+							}}>
+							<img src={settingsIcon} alt="Settings" />
+						</button>
+					</div>
+				</div>
+			</section>
+			<section className="main-four">
+				<div className="vodoravno">
+					<div className="parameter">
+						{circleDisplay({
+							value: voltage,
+							unit: "V",
+							maxRange: 5,
+							color: voltage < 2 ? "red" : "rgb(43, 82, 189)",
+						})}
+					</div>
+					<div className="parameter">
+						{circleDisplay({
+							value: temperature,
+							unit: "°C",
+							maxRange: 50,
+							color:
+								temperature > 40 ? "red" : "rgb(43, 82, 189)",
+						})}
+					</div>
+				</div>
+				<div className="text settingsDash">
+					<div onClick={handleServoClick}>
+						<h2>Servo status</h2>
+						<p>{servoStatus}</p>
+					</div>
+					<div onClick={handleBeeperClick}>
+						<h2>Beeper</h2>
+						<p>{beeperStatus}</p>
+					</div>
+				</div>
+				<div className="vodoravno">
+					<div
+						className="launch"
+						onClick={() => toggleArm()}
+						style={{
+							opacity: vehicleStatus === "Launched" ? 0.2 : 1,
+						}}>
+						<button
+							style={{
+								cursor:
+									vehicleStatus === "Launched"
+										? "not-allowed"
+										: "pointer",
+								backgroundColor:
+									vehicleStatus === "Ready" ? "green" : "red",
+							}}>
+							{vehicleStatus === "Ready" ? "Arm" : "Disarm"}
+						</button>
+					</div>
+					<div
+						className="launch"
+						onClick={() => launchVehicle()}
+						style={{
+							opacity: vehicleStatus === "Armed" ? 1 : 0.2,
+						}}>
+						<button
+							style={{
+								cursor:
+									vehicleStatus === "Armed"
+										? "pointer"
+										: "not-allowed",
+							}}>
+							Launch
+						</button>
+					</div>
+				</div>
+			</section>
+			<section>
+				<div id="map">
 					<MapContainer
 						center={position}
 						zoom={20}
@@ -224,8 +224,8 @@ function Dashboard({ data, setVehicleStatus, vehicleStatus }) {
 						<Marker position={position} icon={icon}></Marker>
 						<ChangeView center={position} />
 					</MapContainer>
-				</section>
-			</div>
+				</div>
+			</section>
 		</div>
 	);
 }

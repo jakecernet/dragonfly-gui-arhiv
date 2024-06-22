@@ -1,32 +1,22 @@
 .dashboard {
     display: flex;
-    flex-direction: column;
     align-items: center;
-}
-
-.dashboard h1 {
-    font-size: 2.5rem;
-    color: #fff;
-    margin-top: 40px;
-    font-weight: 200;
-}
-
-.parameters {
-    width: 100%;
-    display: flex;
-    margin-top: 120px;
     flex-wrap: wrap;
+    margin-top: 80px;
+    height: 600px;
 }
 
-.parameters section {
+.dashboard section {
     width: 33.3%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    padding: 20px;
 }
 
 .settingsDash {
-    width: 80%;
+    width: 100%;
+    gap: 20px;
 }
 
 .settingsDash div {
@@ -48,8 +38,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0 20px;
-    gap: 20px;
+    justify-content: space-between;
+    height: 100%;
 }
 
 .text .heights {
@@ -58,42 +48,6 @@
     justify-content: space-between;
     align-items: center;
     gap: 20px;
-}
-
-.init div {
-    background: transparent!important;
-    padding: 0!important;
-}
-
-.init div span{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin-right: 20px;
-    padding: 20px;
-    border-radius: 10px;
-    background: #1b1b1b8f;
-}
-
-.init div button {
-    background: #1b1b1b8f;
-    border: none;
-    border-radius: 10px;
-    padding: 10px;
-    transition: 0.2s;
-}
-
-.init div button:hover {
-    background: #8d8d8d5b;
-    cursor: pointer;
-}
-
-.init div button img {
-    width: 30px;
-    height: 30px;
-    filter: invert(1);
 }
 
 .text div {
@@ -118,34 +72,79 @@
     font-weight: 150;
 }
 
-.parameters .parameter {
+.init div {
+    background: transparent !important;
+    padding: 0 !important;
+}
+
+.init div span {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-right: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    background: #1b1b1b8f;
+}
+
+.init div button {
+    background: #1b1b1b8f;
+    border: none;
+    border-radius: 10px;
+    padding: 20px;
+    transition: 0.2s;
+}
+
+.init div button:hover {
+    background: #8d8d8d5b;
+    cursor: pointer;
+}
+
+.init div button img {
+    width: 30px;
+    height: 30px;
+    filter: invert(1);
+}
+
+.main-four {
+    margin: auto;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 20px;
+    width: 30%!important;
+}
+
+.vodoravno {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    gap: 20px;
+    width: 100%;
+}
+
+.vodoravno .parameter {
     background: #1b1b1b5b;
-    width: 220px;
-    height: 220px;
     border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 20px;
 }
 
-.parameters .parameter .circle {
+.vodoravno .parameter .circle {
     width: 85%;
-    height: 85%;
     border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    text-align: center;
     box-shadow: 0 0 10px rgb(255, 255, 255);
 }
 
-.parameters .parameter .circle h2 {
+.vodoravno .parameter .circle h2 {
     color: #fff;
     font-weight: 200;
 }
 
-.parameters .parameter .circle p {
+.vodoravno .parameter .circle p {
     color: #fff;
     font-size: 1.2rem;
     font-weight: 150;
@@ -157,22 +156,9 @@
     width: 150px;
 }
 
-.main-four {
-    margin: auto;
-    flex-wrap: wrap;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.vodoravno{
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-}
-
 .launch button {
     background: #6e030325;
-    border: 4px solid #ffffff;
+    border: none;
     border-radius: 50%;
     transition: 0.2s;
     color: #fff;
@@ -180,8 +166,8 @@
     font-weight: 600;
     width: 150px;
     height: 150px;
-    box-shadow: 0 0 10px rgb(255, 255, 255);
     margin: 10px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.37);
 }
 
 .launch button:hover {
@@ -189,10 +175,16 @@
     cursor: pointer;
 }
 
-.leaflet-top{
-    z-index: 500!important;
+.leaflet-top {
+    z-index: 500 !important;
 }
 
 .leaflet-container {
-    margin-top: 0!important;
+    margin-top: 0 !important;
+    width: 100% !important;
+}
+
+#map {
+    height: 600px;
+    width: 100%;
 }

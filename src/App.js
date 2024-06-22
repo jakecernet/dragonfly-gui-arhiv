@@ -85,6 +85,15 @@ function App() {
 		}
 	}, [flightNumber]); */
 
+	useEffect(() => {
+		if (displayData.FlightNumber !== "") {
+			document.title = `Flight ${displayData.FlightNumber}`;
+		}
+		if (vehicleStatus === "Launched") {
+			document.getElementById("colored").style.color = "red";
+		}
+	});
+
 	return (
 		<div className="App">
 			{/* <div className="overlay">
@@ -103,6 +112,41 @@ function App() {
 					</div>
 				</div>
 			</div> */}
+			<div className="status">
+				<div className="left">
+					<h2>
+						Vehicle status:{" "}
+						<span
+							id="colored"
+							style={{
+								color:
+									vehicleStatus === "Ready"
+										? "rgba(0, 255, 0, 0.745)"
+										: "yellow",
+							}}>
+							{vehicleStatus}
+						</span>
+					</h2>
+				</div>
+				<div className="center">
+					<h1>Flight {displayData.FlightNumber}</h1>
+				</div>
+				<div className="right">
+					<h2>Flight time: {displayData.FlightTime.toFixed(1)}</h2>
+					<h2>Uptime: {displayData.Uptime.toFixed(1)}</h2>
+				</div>
+			</div>
+			<div className="content">
+				{selected === "dashboard" && (
+					<Dashboard
+						data={displayData}
+						setVehicleStatus={setVehicleStatus}
+						vehicleStatus={vehicleStatus}
+					/>
+				)}
+				{selected === "analysis" && <Analysis data={displayData} />}
+				{selected === "settings" && <Settings data={displayData} />}
+			</div>
 			<nav>
 				<ul>
 					<li onClick={() => setSelected("dashboard")}>
@@ -125,37 +169,6 @@ function App() {
 					</li>
 				</ul>
 			</nav>
-			<div className="status">
-				<div className="left">
-					<h2>
-						Vehicle status:{" "}
-						<span
-							style={{
-								background:
-									vehicleStatus === "Ready"
-										? "rgba(0, 255, 0, 0.445)"
-										: "#46020242",
-							}}>
-							{vehicleStatus}
-						</span>
-					</h2>
-				</div>
-				<div className="right">
-					<h2>Flight time: {displayData.FlightTime.toFixed(1)}</h2>
-					<h2>Uptime: {displayData.Uptime.toFixed(1)}</h2>
-				</div>
-			</div>
-			<div className="content">
-				{selected === "dashboard" && (
-					<Dashboard
-						data={displayData}
-						setVehicleStatus={setVehicleStatus}
-						vehicleStatus={vehicleStatus}
-					/>
-				)}
-				{selected === "analysis" && <Analysis data={displayData} />}
-				{selected === "settings" && <Settings data={displayData} />}
-			</div>
 		</div>
 	);
 }
