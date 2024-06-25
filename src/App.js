@@ -1,13 +1,13 @@
 import { useState, useEffect, useRef } from "react";
 import "./App.css";
 
-import dashboardIcon from "./icons/dashboard.svg";
-import settingsIcon from "./icons/settings.svg";
-import analysisIcon from "./icons/analysis.svg";
-
 import Dashboard from "./components/dashboard/dashboard";
 import Analysis from "./components/analysis/analysis";
 import Settings from "./components/settings/settings";
+
+import dashboardIcon from "./icons/dashboard.svg";
+import settingsIcon from "./icons/settings.svg";
+import analysisIcon from "./icons/analysis.svg";
 
 import GetData from "./Simulator.mjs";
 import useWebSocket from "./useWebSocket";
