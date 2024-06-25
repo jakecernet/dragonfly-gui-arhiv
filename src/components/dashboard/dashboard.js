@@ -11,7 +11,6 @@ import L from "leaflet";
 import locationMarker from "../../icons/location_marker.png";
 import settingsIcon from "../../icons/settings.svg";
 
-
 import useWebSocket from "../../useWebSocket";
 
 const icon = new L.Icon({
@@ -41,9 +40,9 @@ const circleDisplay = ({ value, unit, maxRange, color }) => {
 };
 
 function Dashboard({ data, setVehicleStatus, vehicleStatus }) {
-
-	const { data: WebSocketData, sendMessage } = useWebSocket('ws://localhost:8765');
-		
+	const { data: WebSocketData, sendMessage } = useWebSocket(
+		"ws://localhost:8765"
+	);
 
 	const [InitialHeight, setInitialHeight] = useState("N/A");
 	const [InitialGPS, setInitialGPS] = useState("N/A");
@@ -69,27 +68,20 @@ function Dashboard({ data, setVehicleStatus, vehicleStatus }) {
 			servoStatus === "Deployed" ? "Not deployed" : "Deployed"
 		);
 
-		if(servoStatus === "Deployed"){
-			
-			sendMessage({ command: 'move_servo', payload:"90"});
-		}
-		else{
-			sendMessage({ command: 'move_servo', payload:"0"});
+		if (servoStatus === "Deployed") {
+			sendMessage({ command: "move_servo", payload: "90" });
+		} else {
+			sendMessage({ command: "move_servo", payload: "0" });
 		}
 	};
 
 	const handleBeeperClick = () => {
-		
 		setBeeperStatus(beeperStatus === "On" ? "Off" : "On");
-		if(beeperStatus==="On"){
-			sendMessage({ command: 'beeper_off'});
-			
+		if (beeperStatus === "On") {
+			sendMessage({ command: "beeper_off" });
+		} else {
+			sendMessage({ command: "beeper_on" });
 		}
-		else{
-			sendMessage({ command: 'beeper_on'});
-		}
-		
-    
 	};
 
 	function ChangeView({ center }) {
