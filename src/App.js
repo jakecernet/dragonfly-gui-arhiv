@@ -48,18 +48,13 @@ function App() {
 		if (vehicleStatus === "Ready") {
 			document.body.classList.toggle("armed", false);
 			document.body.classList.toggle("ready", true);
+			document.title = `Flight ${flightNumber} - Ready`;
 		} else {
 			document.body.classList.toggle("armed", true);
 			document.body.classList.toggle("ready", false);
+			document.title = `Flight ${flightNumber} - ${vehicleStatus}`;
 		}
-	}, [vehicleStatus]);
-
-	useEffect(() => {
-		if (vehicleStatus === "Launched") {
-			document.getElementById("colored").style.color = "red";
-            document.title = `Flight ${flightNumber} - Launched`;
-		}
-	}, [vehicleStatus]);
+	}, [vehicleStatus, flightNumber]);
 
 	useEffect(() => {
 		if (WebSocketData) {
@@ -88,7 +83,7 @@ function App() {
 				}
 			}
 			document.querySelector(".overlay").style.display = "none";
-            document.title = `Flight ${newFlightNumber}`;
+			document.title = `Flight ${newFlightNumber} - Ready`;
 		}
 	};
 
@@ -139,7 +134,7 @@ function App() {
 					</h2>
 				</div>
 				<div className="center">
-					<h1>Flight {displayData.FlightNumber}</h1>
+					<h1>Flight {flightNumber}</h1>
 				</div>
 				<div className="right">
 					<h2>Flight time: {displayData.FlightTime.toFixed(1)}</h2>
