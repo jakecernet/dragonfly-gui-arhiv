@@ -1,20 +1,19 @@
 import "./analysis.css";
 
-import data from "../../Simulator.mjs";
 import { useEffect, useState } from "react";
 
-const Analysis = ({AnalysisData, flightNumber}) => {
+const Analysis = ({ AnalysisData }) => {
 	const [displayData, setDisplayData] = useState({
-								FlightNumber: NaN,
-								NumberOfCommandsSent: NaN,
-								InitHeight: NaN,
-								InitGPS: NaN,
-								InitTime: NaN
-							});
+		FlightNumber: NaN,
+		NumberOfCommandsSent: NaN,
+		InitHeight: NaN,
+		InitGPS: NaN,
+		InitTime: NaN,
+	});
 
-function FormatAnalysisData(data) {
-		const lines = data.split('\n');
-	
+	function FormatAnalysisData(data) {
+		const lines = data.split("\n");
+
 		const flightNumber = lines[0].trim();
 		const numCommandsSent = parseInt(lines[1].trim(), 10);
 		const initHeight = parseInt(lines[2].trim(), 10);
@@ -22,8 +21,7 @@ function FormatAnalysisData(data) {
 		const initTime = lines[4].trim();
 		const uptime = lines[5].trim();
 		const flightTime = lines[6].trim();
-		
-	
+
 		let formattedData = {
 			FlightNumber: flightNumber,
 			NumberOfCommandsSent: numCommandsSent,
@@ -31,24 +29,17 @@ function FormatAnalysisData(data) {
 			InitGPS: initGPS,
 			InitTime: initTime,
 			FlightTime: flightTime,
-			Uptime: uptime
+			Uptime: uptime,
 		};
-	
+
 		return formattedData;
 	}
 
 	useEffect(() => {
 		setDisplayData(FormatAnalysisData(AnalysisData));
-	}
-	, []);
+	}, []);
 
-
-	
-
-
-
-
-    return (
+	return (
 		<div className="analysis">
 			<h1>Analysis</h1>
 			<div className="info">
@@ -58,7 +49,6 @@ function FormatAnalysisData(data) {
 					<h2>Flight time: {displayData.FlightTime} s</h2>
 					<h2>Uptime: {displayData.Uptime} s</h2>
 					<h2>Initial GPS: {displayData.InitGPS}</h2>
-					
 				</div>
 			</div>
 		</div>

@@ -196,8 +196,6 @@ function App() {
 				{selected === "analysis" && (
 					<Analysis
 						AnalysisData={AnalysisData}
-						data={displayData}
-						flightNumber={flightNumber}
 					/>
 				)}
 				{selected === "settings" && <Settings data={displayData} />}

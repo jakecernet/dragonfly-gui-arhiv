@@ -3,7 +3,7 @@
     align-items: center;
     flex-wrap: wrap;
     margin-top: 80px;
-    height: 600px;
+    height: 700px;
 }
 
 .dashboard section {
@@ -180,11 +180,10 @@
 }
 
 .leaflet-container {
-    margin-top: 0 !important;
     width: 100% !important;
 }
 
 #map {
-    height: 600px;
+    height: 700px;
     width: 100%;
 }

@@ -173,6 +173,12 @@ function Dashboard({
 						<p>{PressureHeight} m</p>
 					</div>
 				</div>
+				<div className="heights">
+					<div>
+						<h2>Distance form launchpad</h2>
+						<p>{data.DistanceFromLaunchpad} m</p>
+					</div>
+				</div>
 				<div className="heights init">
 					<div>
 						<span>
@@ -191,7 +197,6 @@ function Dashboard({
 							<img src={settingsIcon} alt="Settings" />
 						</button>
 					</div>
-
 					<div>
 						<span>
 							<h2>Initial GPS cords</h2>
