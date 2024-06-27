@@ -39,8 +39,16 @@ const circleDisplay = ({ value, unit, maxRange, color }) => {
 	);
 };
 
-function Dashboard({ data, setVehicleStatus, vehicleStatus, flightNumber, setAnalysisData, setInitialFlightTime, initialFlightTime, initialUptime}) {
-
+function Dashboard({
+	data,
+	setVehicleStatus,
+	vehicleStatus,
+	flightNumber,
+	setAnalysisData,
+	setInitialFlightTime,
+	initialFlightTime,
+	initialUptime,
+}) {
 	const { data: WebSocketData, sendMessage } = useWebSocket(
 		"ws://localhost:8764"
 	);
@@ -97,9 +105,6 @@ function Dashboard({ data, setVehicleStatus, vehicleStatus, flightNumber, setAna
 		} else {
 			if (vehicleStatus === "Ready") {
 				setVehicleStatus("Armed");
-
-
-				
 			} else {
 				setVehicleStatus("Ready");
 			}
@@ -125,8 +130,7 @@ function Dashboard({ data, setVehicleStatus, vehicleStatus, flightNumber, setAna
 
 	useEffect(() => {
 		sendMessage({ command: "flight_number", payload: flightNumber });
-	}
-	, [flightNumber]);	
+	}, [flightNumber]);
 
 	useEffect(() => {
 		if (WebSocketData) {
@@ -139,18 +143,18 @@ function Dashboard({ data, setVehicleStatus, vehicleStatus, flightNumber, setAna
 
 	useEffect(() => {
 		sendMessage({ command: "vehicle_status", payload: vehicleStatus });
-	}
-	, [vehicleStatus]);
+	}, [vehicleStatus]);
 
 	const HandleEndFlight = () => {
 		const uptime = Math.floor(Date.now() / 1000) - initialUptime;
 		const flightTime = Math.floor(Date.now() / 1000) - initialFlightTime;
 
-		sendMessage({command: "end_flight", payload: [flightNumber, uptime, flightTime]});
+		sendMessage({
+			command: "end_flight",
+			payload: [flightNumber, uptime, flightTime],
+		});
 		window.location.reload();
-	}
-
-
+	};
 
 	return (
 		<div className="dashboard">
@@ -177,7 +181,10 @@ function Dashboard({ data, setVehicleStatus, vehicleStatus, flightNumber, setAna
 						</span>
 						<button
 							title="Set initial height"
-							disabled={vehicleStatus === "Armed" || vehicleStatus === "Launched"}
+							disabled={
+								vehicleStatus === "Armed" ||
+								vehicleStatus === "Launched"
+							}
 							onClick={() => {
 								setInitialHeight(GPSHeight);
 							}}>
@@ -192,7 +199,10 @@ function Dashboard({ data, setVehicleStatus, vehicleStatus, flightNumber, setAna
 						</span>
 						<button
 							title="Set initial GPS coordinates"
-							disabled={vehicleStatus === "Armed" || vehicleStatus === "Launched"}
+							disabled={
+								vehicleStatus === "Armed" ||
+								vehicleStatus === "Launched"
+							}
 							onClick={() => {
 								setInitialGPS(positionShort);
 							}}>
@@ -231,8 +241,7 @@ function Dashboard({ data, setVehicleStatus, vehicleStatus, flightNumber, setAna
 						<p>{beeperStatus}</p>
 					</div>
 				</div>
-				<button
-				onClick={HandleEndFlight}>END FLIGHT</button>
+
 				<div className="vodoravno">
 					<div
 						className="launch"
@@ -252,7 +261,6 @@ function Dashboard({ data, setVehicleStatus, vehicleStatus, flightNumber, setAna
 							{vehicleStatus === "Ready" ? "Arm" : "Disarm"}
 						</button>
 					</div>
-					
 					<div
 						className="launch"
 						onClick={() => launchVehicle()}
@@ -265,10 +273,31 @@ function Dashboard({ data, setVehicleStatus, vehicleStatus, flightNumber, setAna
 									vehicleStatus === "Armed"
 										? "pointer"
 										: "not-allowed",
+								backgroundColor:
+									vehicleStatus === "Armed" ? "green" : "red",
 							}}>
 							Launch
 						</button>
-						
+					</div>
+					<div
+						className="launch"
+						onClick={HandleEndFlight}
+						style={{
+							opacity: vehicleStatus === "Launched" ? 1 : 0.2,
+						}}>
+						<button
+							style={{
+								cursor:
+									vehicleStatus === "Launched"
+										? "pointer"
+										: "not-allowed",
+								backgroundColor:
+									vehicleStatus === "Launched"
+										? "red"
+										: "red",
+							}}>
+							End flight
+						</button>
 					</div>
 				</div>
 			</section>
@@ -292,7 +321,6 @@ function Dashboard({ data, setVehicleStatus, vehicleStatus, flightNumber, setAna
 					</MapContainer>
 				</div>
 			</section>
-			
 		</div>
 	);
 }

@@ -97,7 +97,7 @@ function App() {
 
 	useEffect(() => {
 		if (vehicleStatus === "View only") {
-			selected === "dashboard" && setSelected("analysis");
+			setSelected("analysis");
 			document.querySelector(".right").style.opacity = "0";
 			document.querySelector(
 				"nav ul li:nth-child(1)"
@@ -109,26 +109,18 @@ function App() {
 			).style.pointerEvents = "auto";
 			document.querySelector("nav ul li:nth-child(2)").style.opacity =
 				"1";
-		} else if (vehicleStatus === "Ready") {
-			document.querySelector(".right").style.opacity = "1";
 			document.querySelector(
-				"nav ul li:nth-child(1)"
-			).style.pointerEvents = "auto";
-			document.querySelector("nav ul li:nth-child(1)").style.opacity =
-				"1";
-			//disable analysis button
+				"nav ul li:nth-child(3)"
+			).style.pointerEvents = "none";
+			document.querySelector("nav ul li:nth-child(3)").style.opacity =
+				"0.5";
+		} else {
+			document.querySelector(".right").style.opacity = "1";
 			document.querySelector(
 				"nav ul li:nth-child(2)"
 			).style.pointerEvents = "none";
 			document.querySelector("nav ul li:nth-child(2)").style.opacity =
 				"0.5";
-		} else {
-			document.querySelector(".right").style.opacity = "1";
-			document.querySelector(
-				"nav ul li:nth-child(1)"
-			).style.pointerEvents = "auto";
-			document.querySelector("nav ul li:nth-child(1)").style.opacity =
-				"1";
 		}
 	}, [vehicleStatus]);
 
