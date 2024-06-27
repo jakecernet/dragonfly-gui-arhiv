@@ -39,7 +39,7 @@ const circleDisplay = ({ value, unit, maxRange, color }) => {
 	);
 };
 
-function Dashboard({ data, setVehicleStatus, vehicleStatus, flightNumber, setAnalysisData }) {
+function Dashboard({ data, setVehicleStatus, vehicleStatus, flightNumber, setAnalysisData, setInitialFlightTime, initialFlightTime, initialUptime}) {
 
 	const { data: WebSocketData, sendMessage } = useWebSocket(
 		"ws://localhost:8764"
@@ -109,6 +109,7 @@ function Dashboard({ data, setVehicleStatus, vehicleStatus, flightNumber, setAna
 	const launchVehicle = () => {
 		if (vehicleStatus === "Armed") {
 			setVehicleStatus("Launched");
+			setInitialFlightTime(Date.now() / 1000);
 		} else {
 			return;
 		}
@@ -142,7 +143,10 @@ function Dashboard({ data, setVehicleStatus, vehicleStatus, flightNumber, setAna
 	, [vehicleStatus]);
 
 	const HandleEndFlight = () => {
-		sendMessage({ command: "end_flight", payload: flightNumber});
+		const uptime = Math.floor(Date.now() / 1000) - initialUptime;
+		const flightTime = Math.floor(Date.now() / 1000) - initialFlightTime;
+
+		sendMessage({command: "end_flight", payload: [flightNumber, uptime, flightTime]});
 		window.location.reload();
 	}
 

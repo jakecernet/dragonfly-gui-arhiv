@@ -19,7 +19,9 @@ function App() {
 	const inputRef = useRef(null);
 	const [vehicleStatus, setVehicleStatus] = useState("Ready");
 	const [inputFlightNumber, setInputFlightNumber] = useState("");
-
+	const [initialUptime, setInitialUptime] = useState(Math.floor(Date.now() / 1000));
+	const [initialFlightTime, setInitialFlightTime] = useState(false);
+	
 
 	useEffect(() => {
 		if (flightNumber.length > 10) {
@@ -99,18 +101,30 @@ function App() {
 			document.querySelector(".right").style.opacity = "0";
 			document.querySelector("nav ul li:nth-child(1)").style.pointerEvents = "none";
 			document.querySelector("nav ul li:nth-child(1)").style.opacity = "0.5";
+			document.querySelector("nav ul li:nth-child(2)").style.pointerEvents = "auto";
+			document.querySelector("nav ul li:nth-child(2)").style.opacity = "1";
 
 
 		}
+		else if(vehicleStatus === "Ready") {
+			document.querySelector(".right").style.opacity = "1";
+			document.querySelector("nav ul li:nth-child(1)").style.pointerEvents = "auto";
+			document.querySelector("nav ul li:nth-child(1)").style.opacity = "1";
+			//disable analysis button
+			document.querySelector("nav ul li:nth-child(2)").style.pointerEvents = "none";
+			document.querySelector("nav ul li:nth-child(2)").style.opacity = "0.5";
+
+		}
+
 		else {
 			document.querySelector(".right").style.opacity = "1";
 			document.querySelector("nav ul li:nth-child(1)").style.pointerEvents = "auto";
 			document.querySelector("nav ul li:nth-child(1)").style.opacity = "1";
 
+
 	}
 	}
 	, [vehicleStatus]);
-
 
 	return (
 		<div className="App">
@@ -150,8 +164,13 @@ function App() {
 					<h1>Flight {flightNumber}</h1>
 				</div>
 				<div className="right">
-					<h2>Flight time: {displayData.FlightTime.toFixed(1)}</h2>
-					<h2>Uptime: {displayData.Uptime.toFixed(1)}</h2>
+				<h2>
+						Flight time:{" "}
+						{initialFlightTime
+							? ((Date.now() / 1000) - initialFlightTime).toFixed(1)
+							: "N/A"}
+					</h2>
+					<h2>Uptime: {((Date.now() / 1000) - initialUptime).toFixed(1)}</h2>
 				</div>
 			</div>
 			<div className="content">
@@ -163,6 +182,9 @@ function App() {
 						setFlightNumber={setFlightNumber}
 						flightNumber={flightNumber}
 						setAnalysisData={setAnalysisData}
+						setInitialFlightTime={setInitialFlightTime}
+						initialFlightTime={initialFlightTime}
+						initialUptime={initialUptime}
 					/>
 				)}
 				{selected === "analysis" && <Analysis AnalysisData={AnalysisData} data={displayData} flightNumber={flightNumber}/>}
