@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./dashboard.css";
 
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
@@ -39,10 +39,9 @@ const circleDisplay = ({ value, unit, maxRange, color }) => {
 	);
 };
 
-function Dashboard({ data, setVehicleStatus, vehicleStatus, flightNumber, setAnalysisData, setInitialFlightTime, initialFlightTime, initialUptime}) {
-
+function Dashboard({ data, setVehicleStatus, vehicleStatus }) {
 	const { data: WebSocketData, sendMessage } = useWebSocket(
-		"ws://localhost:8764"
+		"ws://localhost:8765"
 	);
 
 	const [InitialHeight, setInitialHeight] = useState("N/A");
@@ -97,9 +96,6 @@ function Dashboard({ data, setVehicleStatus, vehicleStatus, flightNumber, setAna
 		} else {
 			if (vehicleStatus === "Ready") {
 				setVehicleStatus("Armed");
-
-
-				
 			} else {
 				setVehicleStatus("Ready");
 			}
@@ -109,48 +105,10 @@ function Dashboard({ data, setVehicleStatus, vehicleStatus, flightNumber, setAna
 	const launchVehicle = () => {
 		if (vehicleStatus === "Armed") {
 			setVehicleStatus("Launched");
-			setInitialFlightTime(Date.now() / 1000);
 		} else {
 			return;
 		}
 	};
-
-	useEffect(() => {
-		sendMessage({ command: "initial_height", payload: InitialHeight });
-	}, [InitialHeight]);
-
-	useEffect(() => {
-		sendMessage({ command: "initial_gps", payload: InitialGPS });
-	}, [InitialGPS]);
-
-	useEffect(() => {
-		sendMessage({ command: "flight_number", payload: flightNumber });
-	}
-	, [flightNumber]);	
-
-	useEffect(() => {
-		if (WebSocketData) {
-			if (WebSocketData.command === "view_only") {
-				setVehicleStatus("View only");
-				setAnalysisData(WebSocketData.payload);
-			}
-		}
-	}, [WebSocketData]);
-
-	useEffect(() => {
-		sendMessage({ command: "vehicle_status", payload: vehicleStatus });
-	}
-	, [vehicleStatus]);
-
-	const HandleEndFlight = () => {
-		const uptime = Math.floor(Date.now() / 1000) - initialUptime;
-		const flightTime = Math.floor(Date.now() / 1000) - initialFlightTime;
-
-		sendMessage({command: "end_flight", payload: [flightNumber, uptime, flightTime]});
-		window.location.reload();
-	}
-
-
 
 	return (
 		<div className="dashboard">
@@ -177,14 +135,12 @@ function Dashboard({ data, setVehicleStatus, vehicleStatus, flightNumber, setAna
 						</span>
 						<button
 							title="Set initial height"
-							disabled={vehicleStatus === "Armed" || vehicleStatus === "Launched"}
 							onClick={() => {
 								setInitialHeight(GPSHeight);
 							}}>
 							<img src={settingsIcon} alt="Settings" />
 						</button>
 					</div>
-
 					<div>
 						<span>
 							<h2>Initial GPS cords</h2>
@@ -192,7 +148,6 @@ function Dashboard({ data, setVehicleStatus, vehicleStatus, flightNumber, setAna
 						</span>
 						<button
 							title="Set initial GPS coordinates"
-							disabled={vehicleStatus === "Armed" || vehicleStatus === "Launched"}
 							onClick={() => {
 								setInitialGPS(positionShort);
 							}}>
@@ -231,8 +186,6 @@ function Dashboard({ data, setVehicleStatus, vehicleStatus, flightNumber, setAna
 						<p>{beeperStatus}</p>
 					</div>
 				</div>
-				<button
-				onClick={HandleEndFlight}>END FLIGHT</button>
 				<div className="vodoravno">
 					<div
 						className="launch"
@@ -252,7 +205,6 @@ function Dashboard({ data, setVehicleStatus, vehicleStatus, flightNumber, setAna
 							{vehicleStatus === "Ready" ? "Arm" : "Disarm"}
 						</button>
 					</div>
-					
 					<div
 						className="launch"
 						onClick={() => launchVehicle()}
@@ -268,7 +220,6 @@ function Dashboard({ data, setVehicleStatus, vehicleStatus, flightNumber, setAna
 							}}>
 							Launch
 						</button>
-						
 					</div>
 				</div>
 			</section>
@@ -292,7 +243,6 @@ function Dashboard({ data, setVehicleStatus, vehicleStatus, flightNumber, setAna
 					</MapContainer>
 				</div>
 			</section>
-			
 		</div>
 	);
 }

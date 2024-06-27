@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./App.css";
 
 import Dashboard from "./components/dashboard/dashboard";
@@ -10,18 +10,18 @@ import settingsIcon from "./icons/settings.svg";
 import analysisIcon from "./icons/analysis.svg";
 
 import GetData from "./Simulator.mjs";
+import useWebSocket from "./useWebSocket";
 
 function App() {
 	const [selected, setSelected] = useState("dashboard");
-	const [AnalysisData, setAnalysisData] = useState("");
 	const [displayData, setDisplayData] = useState(GetData());
 	const [flightNumber, setFlightNumber] = useState("");
 	const inputRef = useRef(null);
 	const [vehicleStatus, setVehicleStatus] = useState("Ready");
-	const [inputFlightNumber, setInputFlightNumber] = useState("");
-	const [initialUptime, setInitialUptime] = useState(Math.floor(Date.now() / 1000));
-	const [initialFlightTime, setInitialFlightTime] = useState(false);
-	
+
+	const { data: WebSocketData, sendMessage } = useWebSocket(
+		"ws://localhost:8765"
+	);
 
 	useEffect(() => {
 		if (flightNumber.length > 10) {
@@ -56,10 +56,15 @@ function App() {
 		}
 	}, [vehicleStatus, flightNumber]);
 
+	useEffect(() => {
+		if (WebSocketData) {
+			console.log("Received data from WebSocket:", WebSocketData);
+			setDisplayData((prevData) => ({ ...prevData, ...WebSocketData }));
+		}
+	}, [WebSocketData]);
 
 	const handleKeyPress = (event) => {
 		if (event.key === "Enter") {
-			setFlightNumber(inputFlightNumber);
 			const newFlightNumber = flightNumber.trim();
 			if (newFlightNumber !== "") {
 				const existingFlightNumbers = document.cookie
@@ -83,48 +88,16 @@ function App() {
 	};
 
 	const handleInputChange = (event) => {
-		setInputFlightNumber(event.target.value);
+		setFlightNumber(event.target.value);
 		if (inputRef.current) {
 			inputRef.current.style.width = `${event.target.value.length + 1}ch`;
 		}
 	};
-
 	useEffect(() => {
 		if (flightNumber.length === 0) {
 			inputRef.current.style.width = "17ch";
 		}
 	}, [flightNumber]);
-
-	useEffect(() => {
-		if(vehicleStatus === "View only") {
-			selected === "dashboard" && setSelected("analysis");
-			document.querySelector(".right").style.opacity = "0";
-			document.querySelector("nav ul li:nth-child(1)").style.pointerEvents = "none";
-			document.querySelector("nav ul li:nth-child(1)").style.opacity = "0.5";
-			document.querySelector("nav ul li:nth-child(2)").style.pointerEvents = "auto";
-			document.querySelector("nav ul li:nth-child(2)").style.opacity = "1";
-
-
-		}
-		else if(vehicleStatus === "Ready") {
-			document.querySelector(".right").style.opacity = "1";
-			document.querySelector("nav ul li:nth-child(1)").style.pointerEvents = "auto";
-			document.querySelector("nav ul li:nth-child(1)").style.opacity = "1";
-			//disable analysis button
-			document.querySelector("nav ul li:nth-child(2)").style.pointerEvents = "none";
-			document.querySelector("nav ul li:nth-child(2)").style.opacity = "0.5";
-
-		}
-
-		else {
-			document.querySelector(".right").style.opacity = "1";
-			document.querySelector("nav ul li:nth-child(1)").style.pointerEvents = "auto";
-			document.querySelector("nav ul li:nth-child(1)").style.opacity = "1";
-
-
-	}
-	}
-	, [vehicleStatus]);
 
 	return (
 		<div className="App">
@@ -135,7 +108,7 @@ function App() {
 							ref={inputRef}
 							type="text"
 							placeholder="Enter flight number"
-							value={inputFlightNumber}
+							value={flightNumber}
 							onChange={handleInputChange}
 							onKeyPress={handleKeyPress}
 							style={{ width: `${flightNumber.length + 1}ch` }}
@@ -164,13 +137,8 @@ function App() {
 					<h1>Flight {flightNumber}</h1>
 				</div>
 				<div className="right">
-				<h2>
-						Flight time:{" "}
-						{initialFlightTime
-							? ((Date.now() / 1000) - initialFlightTime).toFixed(1)
-							: "N/A"}
-					</h2>
-					<h2>Uptime: {((Date.now() / 1000) - initialUptime).toFixed(1)}</h2>
+					<h2>Flight time: {displayData.FlightTime.toFixed(1)}</h2>
+					<h2>Uptime: {displayData.Uptime.toFixed(1)}</h2>
 				</div>
 			</div>
 			<div className="content">
@@ -179,15 +147,9 @@ function App() {
 						data={displayData}
 						setVehicleStatus={setVehicleStatus}
 						vehicleStatus={vehicleStatus}
-						setFlightNumber={setFlightNumber}
-						flightNumber={flightNumber}
-						setAnalysisData={setAnalysisData}
-						setInitialFlightTime={setInitialFlightTime}
-						initialFlightTime={initialFlightTime}
-						initialUptime={initialUptime}
 					/>
 				)}
-				{selected === "analysis" && <Analysis AnalysisData={AnalysisData} data={displayData} flightNumber={flightNumber}/>}
+				{selected === "analysis" && <Analysis data={displayData} />}
 				{selected === "settings" && <Settings data={displayData} />}
 			</div>
 			<nav>
