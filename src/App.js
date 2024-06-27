@@ -57,6 +57,12 @@ function App() {
 	}, [vehicleStatus, flightNumber]);
 
 	useEffect(() => {
+		if (vehicleStatus === "Launched") {
+			document.getElementById("colored").style.color = "red";
+		}
+	}, [vehicleStatus]);
+
+	useEffect(() => {
 		if (WebSocketData) {
 			console.log("Received data from WebSocket:", WebSocketData);
 			setDisplayData((prevData) => ({ ...prevData, ...WebSocketData }));
