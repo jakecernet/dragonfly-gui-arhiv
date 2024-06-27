@@ -12,6 +12,7 @@ import locationMarker from "../../icons/location_marker.png";
 import settingsIcon from "../../icons/settings.svg";
 
 import useWebSocket from "../../useWebSocket";
+import { haversineDistance } from "../../AdditionalFunctions";
 
 const icon = new L.Icon({
 	iconUrl: locationMarker,
@@ -55,6 +56,7 @@ function Dashboard({
 
 	const [InitialHeight, setInitialHeight] = useState("N/A");
 	const [InitialGPS, setInitialGPS] = useState("N/A");
+	const [initialGPSdisplay, setInitialGPSdisplay] = useState("N/A");
 	let temperature = data.Temperature;
 	let PressureHeight = data.PressureHeight;
 	let voltage = data.BatteryVoltage.toFixed(2);
@@ -63,14 +65,26 @@ function Dashboard({
 	let servoDeployed = data.ServoParachuteStatus ? "Deployed" : "Not deployed";
 	let beeperEnabled = data.BeeperStatus ? "On" : "Off";
 	let position = [data.GPSCords.latitude, data.GPSCords.longitude];
-	let positionShort = [
-		data.GPSCords.latitude.toFixed(6),
-		", ",
-		data.GPSCords.longitude.toFixed(6),
-	];
+	
 
 	const [servoStatus, setServoStatus] = useState(servoDeployed);
 	const [beeperStatus, setBeeperStatus] = useState(beeperEnabled);
+
+
+	const [positionFromLaunchpad, setPositionFromLaunchpad] = useState("N/A");
+
+	useEffect(() => {
+		const output =haversineDistance(
+							InitialGPS.split(",")[0],
+							InitialGPS.split(",")[1],
+							data.GPSCords.latitude,
+							data.GPSCords.longitude
+						)
+		setPositionFromLaunchpad(output.toFixed(1));
+		
+	}, [data.GPSCords.latitude, data.GPSCords.longitude]);
+
+
 
 	const handleServoClick = () => {
 		setServoStatus(
@@ -145,6 +159,18 @@ function Dashboard({
 		sendMessage({ command: "vehicle_status", payload: vehicleStatus });
 	}, [vehicleStatus]);
 
+	const handleInitGPS = () => {
+		setInitialGPS(data.GPSCords.latitude + "," + data.GPSCords.longitude);
+		let positionShort = [
+			data.GPSCords.latitude.toFixed(6),
+			", ",
+			data.GPSCords.longitude.toFixed(6),
+		];
+		setInitialGPSdisplay(positionShort.join(""));
+	
+	};
+
+
 	const HandleEndFlight = () => {
 		const uptime = Math.floor(Date.now() / 1000) - initialUptime;
 		const flightTime = Math.floor(Date.now() / 1000) - initialFlightTime;
@@ -176,7 +202,7 @@ function Dashboard({
 				<div className="heights">
 					<div>
 						<h2>Distance form launchpad</h2>
-						<p>{data.DistanceFromLaunchpad} m</p>
+						<p>{positionFromLaunchpad} m</p>
 					</div>
 				</div>
 				<div className="heights init">
@@ -200,7 +226,7 @@ function Dashboard({
 					<div>
 						<span>
 							<h2>Initial GPS cords</h2>
-							<p>{InitialGPS}</p>
+							<p>{initialGPSdisplay}</p>
 						</span>
 						<button
 							title="Set initial GPS coordinates"
@@ -208,9 +234,8 @@ function Dashboard({
 								vehicleStatus === "Armed" ||
 								vehicleStatus === "Launched"
 							}
-							onClick={() => {
-								setInitialGPS(positionShort);
-							}}>
+							onClick={handleInitGPS}>
+								
 							<img src={settingsIcon} alt="Settings" />
 						</button>
 					</div>
@@ -291,6 +316,7 @@ function Dashboard({
 							opacity: vehicleStatus === "Launched" ? 1 : 0.2,
 						}}>
 						<button
+						disabled={vehicleStatus === "Launched" ? false : true}
 							style={{
 								cursor:
 									vehicleStatus === "Launched"
