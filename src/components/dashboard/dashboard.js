@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./dashboard.css";
 
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
@@ -39,9 +39,10 @@ const circleDisplay = ({ value, unit, maxRange, color }) => {
 	);
 };
 
-function Dashboard({ data, setVehicleStatus, vehicleStatus }) {
+function Dashboard({ data, setVehicleStatus, vehicleStatus, flightNumber, setAnalysisData }) {
+
 	const { data: WebSocketData, sendMessage } = useWebSocket(
-		"ws://localhost:8765"
+		"ws://localhost:8764"
 	);
 
 	const [InitialHeight, setInitialHeight] = useState("N/A");
@@ -96,6 +97,9 @@ function Dashboard({ data, setVehicleStatus, vehicleStatus }) {
 		} else {
 			if (vehicleStatus === "Ready") {
 				setVehicleStatus("Armed");
+
+
+				
 			} else {
 				setVehicleStatus("Ready");
 			}
@@ -109,6 +113,40 @@ function Dashboard({ data, setVehicleStatus, vehicleStatus }) {
 			return;
 		}
 	};
+
+	useEffect(() => {
+		sendMessage({ command: "initial_height", payload: InitialHeight });
+	}, [InitialHeight]);
+
+	useEffect(() => {
+		sendMessage({ command: "initial_gps", payload: InitialGPS });
+	}, [InitialGPS]);
+
+	useEffect(() => {
+		sendMessage({ command: "flight_number", payload: flightNumber });
+	}
+	, [flightNumber]);	
+
+	useEffect(() => {
+		if (WebSocketData) {
+			if (WebSocketData.command === "view_only") {
+				setVehicleStatus("View only");
+				setAnalysisData(WebSocketData.payload);
+			}
+		}
+	}, [WebSocketData]);
+
+	useEffect(() => {
+		sendMessage({ command: "vehicle_status", payload: vehicleStatus });
+	}
+	, [vehicleStatus]);
+
+	const HandleEndFlight = () => {
+		sendMessage({ command: "end_flight", payload: flightNumber});
+		window.location.reload();
+	}
+
+
 
 	return (
 		<div className="dashboard">
@@ -135,12 +173,14 @@ function Dashboard({ data, setVehicleStatus, vehicleStatus }) {
 						</span>
 						<button
 							title="Set initial height"
+							disabled={vehicleStatus === "Armed" || vehicleStatus === "Launched"}
 							onClick={() => {
 								setInitialHeight(GPSHeight);
 							}}>
 							<img src={settingsIcon} alt="Settings" />
 						</button>
 					</div>
+
 					<div>
 						<span>
 							<h2>Initial GPS cords</h2>
@@ -148,6 +188,7 @@ function Dashboard({ data, setVehicleStatus, vehicleStatus }) {
 						</span>
 						<button
 							title="Set initial GPS coordinates"
+							disabled={vehicleStatus === "Armed" || vehicleStatus === "Launched"}
 							onClick={() => {
 								setInitialGPS(positionShort);
 							}}>
@@ -186,6 +227,8 @@ function Dashboard({ data, setVehicleStatus, vehicleStatus }) {
 						<p>{beeperStatus}</p>
 					</div>
 				</div>
+				<button
+				onClick={HandleEndFlight}>END FLIGHT</button>
 				<div className="vodoravno">
 					<div
 						className="launch"
@@ -205,6 +248,7 @@ function Dashboard({ data, setVehicleStatus, vehicleStatus }) {
 							{vehicleStatus === "Ready" ? "Arm" : "Disarm"}
 						</button>
 					</div>
+					
 					<div
 						className="launch"
 						onClick={() => launchVehicle()}
@@ -220,6 +264,7 @@ function Dashboard({ data, setVehicleStatus, vehicleStatus }) {
 							}}>
 							Launch
 						</button>
+						
 					</div>
 				</div>
 			</section>
@@ -243,6 +288,7 @@ function Dashboard({ data, setVehicleStatus, vehicleStatus }) {
 					</MapContainer>
 				</div>
 			</section>
+			
 		</div>
 	);
 }

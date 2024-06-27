@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./App.css";
 
 import Dashboard from "./components/dashboard/dashboard";
@@ -10,18 +10,16 @@ import settingsIcon from "./icons/settings.svg";
 import analysisIcon from "./icons/analysis.svg";
 
 import GetData from "./Simulator.mjs";
-import useWebSocket from "./useWebSocket";
 
 function App() {
 	const [selected, setSelected] = useState("dashboard");
+	const [AnalysisData, setAnalysisData] = useState("");
 	const [displayData, setDisplayData] = useState(GetData());
 	const [flightNumber, setFlightNumber] = useState("");
 	const inputRef = useRef(null);
 	const [vehicleStatus, setVehicleStatus] = useState("Ready");
+	const [inputFlightNumber, setInputFlightNumber] = useState("");
 
-	const { data: WebSocketData, sendMessage } = useWebSocket(
-		"ws://localhost:8765"
-	);
 
 	useEffect(() => {
 		if (flightNumber.length > 10) {
@@ -56,15 +54,10 @@ function App() {
 		}
 	}, [vehicleStatus, flightNumber]);
 
-	useEffect(() => {
-		if (WebSocketData) {
-			console.log("Received data from WebSocket:", WebSocketData);
-			setDisplayData((prevData) => ({ ...prevData, ...WebSocketData }));
-		}
-	}, [WebSocketData]);
 
 	const handleKeyPress = (event) => {
 		if (event.key === "Enter") {
+			setFlightNumber(inputFlightNumber);
 			const newFlightNumber = flightNumber.trim();
 			if (newFlightNumber !== "") {
 				const existingFlightNumbers = document.cookie
@@ -88,16 +81,36 @@ function App() {
 	};
 
 	const handleInputChange = (event) => {
-		setFlightNumber(event.target.value);
+		setInputFlightNumber(event.target.value);
 		if (inputRef.current) {
 			inputRef.current.style.width = `${event.target.value.length + 1}ch`;
 		}
 	};
+
 	useEffect(() => {
 		if (flightNumber.length === 0) {
 			inputRef.current.style.width = "17ch";
 		}
 	}, [flightNumber]);
+
+	useEffect(() => {
+		if(vehicleStatus === "View only") {
+			selected === "dashboard" && setSelected("analysis");
+			document.querySelector(".right").style.opacity = "0";
+			document.querySelector("nav ul li:nth-child(1)").style.pointerEvents = "none";
+			document.querySelector("nav ul li:nth-child(1)").style.opacity = "0.5";
+
+
+		}
+		else {
+			document.querySelector(".right").style.opacity = "1";
+			document.querySelector("nav ul li:nth-child(1)").style.pointerEvents = "auto";
+			document.querySelector("nav ul li:nth-child(1)").style.opacity = "1";
+
+	}
+	}
+	, [vehicleStatus]);
+
 
 	return (
 		<div className="App">
@@ -108,7 +121,7 @@ function App() {
 							ref={inputRef}
 							type="text"
 							placeholder="Enter flight number"
-							value={flightNumber}
+							value={inputFlightNumber}
 							onChange={handleInputChange}
 							onKeyPress={handleKeyPress}
 							style={{ width: `${flightNumber.length + 1}ch` }}
@@ -147,9 +160,12 @@ function App() {
 						data={displayData}
 						setVehicleStatus={setVehicleStatus}
 						vehicleStatus={vehicleStatus}
+						setFlightNumber={setFlightNumber}
+						flightNumber={flightNumber}
+						setAnalysisData={setAnalysisData}
 					/>
 				)}
-				{selected === "analysis" && <Analysis data={displayData} />}
+				{selected === "analysis" && <Analysis AnalysisData={AnalysisData} data={displayData} flightNumber={flightNumber}/>}
 				{selected === "settings" && <Settings data={displayData} />}
 			</div>
 			<nav>
