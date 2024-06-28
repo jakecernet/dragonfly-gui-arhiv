@@ -65,26 +65,21 @@ function Dashboard({
 	let servoDeployed = data.ServoParachuteStatus ? "Deployed" : "Not deployed";
 	let beeperEnabled = data.BeeperStatus ? "On" : "Off";
 	let position = [data.GPSCords.latitude, data.GPSCords.longitude];
-	
 
 	const [servoStatus, setServoStatus] = useState(servoDeployed);
 	const [beeperStatus, setBeeperStatus] = useState(beeperEnabled);
 
-
 	const [positionFromLaunchpad, setPositionFromLaunchpad] = useState("N/A");
 
 	useEffect(() => {
-		const output =haversineDistance(
-							InitialGPS.split(",")[0],
-							InitialGPS.split(",")[1],
-							data.GPSCords.latitude,
-							data.GPSCords.longitude
-						)
+		const output = haversineDistance(
+			InitialGPS.split(",")[0],
+			InitialGPS.split(",")[1],
+			data.GPSCords.latitude,
+			data.GPSCords.longitude
+		);
 		setPositionFromLaunchpad(output.toFixed(1));
-		
 	}, [data.GPSCords.latitude, data.GPSCords.longitude]);
-
-
 
 	const handleServoClick = () => {
 		setServoStatus(
@@ -167,9 +162,7 @@ function Dashboard({
 			data.GPSCords.longitude.toFixed(6),
 		];
 		setInitialGPSdisplay(positionShort.join(""));
-	
 	};
-
 
 	const HandleEndFlight = () => {
 		const uptime = Math.floor(Date.now() / 1000) - initialUptime;
@@ -235,7 +228,6 @@ function Dashboard({
 								vehicleStatus === "Launched"
 							}
 							onClick={handleInitGPS}>
-								
 							<img src={settingsIcon} alt="Settings" />
 						</button>
 					</div>
@@ -261,7 +253,7 @@ function Dashboard({
 						})}
 					</div>
 				</div>
-				<div className="text settingsDash">
+				<div className="toolbar">
 					<div onClick={handleServoClick}>
 						<h2>Servo status</h2>
 						<p>{servoStatus}</p>
@@ -270,8 +262,25 @@ function Dashboard({
 						<h2>Beeper</h2>
 						<p>{beeperStatus}</p>
 					</div>
+					<div
+						onClick={HandleEndFlight}
+						style={{
+							opacity: vehicleStatus === "Launched" ? 1 : 0.2,
+						}}>
+						<h2
+							disabled={
+								vehicleStatus === "Launched" ? false : true
+							}
+							style={{
+								cursor:
+									vehicleStatus === "Launched"
+										? "pointer"
+										: "not-allowed",
+							}}>
+							End flight
+						</h2>
+					</div>
 				</div>
-
 				<div className="vodoravno">
 					<div
 						className="launch"
@@ -286,7 +295,9 @@ function Dashboard({
 										? "not-allowed"
 										: "pointer",
 								backgroundColor:
-									vehicleStatus === "Ready" ? "green" : "red",
+									vehicleStatus === "Launched"
+										? "red"
+										: "green",
 							}}>
 							{vehicleStatus === "Ready" ? "Arm" : "Disarm"}
 						</button>
@@ -309,31 +320,10 @@ function Dashboard({
 							Launch
 						</button>
 					</div>
-					<div
-						className="launch"
-						onClick={HandleEndFlight}
-						style={{
-							opacity: vehicleStatus === "Launched" ? 1 : 0.2,
-						}}>
-						<button
-						disabled={vehicleStatus === "Launched" ? false : true}
-							style={{
-								cursor:
-									vehicleStatus === "Launched"
-										? "pointer"
-										: "not-allowed",
-								backgroundColor:
-									vehicleStatus === "Launched"
-										? "red"
-										: "red",
-							}}>
-							End flight
-						</button>
-					</div>
 				</div>
 			</section>
 			<section>
-				<div id="map">
+				{/* <div id="map">
 					<MapContainer
 						center={position}
 						zoom={20}
@@ -350,7 +340,7 @@ function Dashboard({
 						<Marker position={position} icon={icon}></Marker>
 						<ChangeView center={position} />
 					</MapContainer>
-				</div>
+				</div> */}
 			</section>
 		</div>
 	);

@@ -14,26 +14,6 @@
     padding: 20px;
 }
 
-.settingsDash {
-    width: 100%;
-    gap: 20px;
-}
-
-.settingsDash div {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: 100%;
-    transition: 0.2s ease;
-}
-
-.settingsDash div:hover {
-    cursor: pointer;
-    scale: 1.01;
-    background: rgba(138, 0, 0, 0.39);
-    color: rgb(0, 155, 83);
-}
-
 .text {
     display: flex;
     flex-direction: column;
@@ -113,7 +93,7 @@
     flex-wrap: wrap;
     flex-direction: column;
     gap: 20px;
-    width: 30%!important;
+    width: 30% !important;
 }
 
 .vodoravno {
@@ -148,6 +128,36 @@
     color: #fff;
     font-size: 1.2rem;
     font-weight: 150;
+}
+
+.toolbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    margin: auto;
+    padding: 20px;
+}
+
+.toolbar div {
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    background: #1b1b1b5b;
+    color: #fff;
+    transition: 0.3s;
+}
+
+.toolbar div:hover {
+    cursor: pointer;
+    background: #1b1b1b;
+}
+
+.toolbar div h2,
+.toolbar div p {
+    font-weight: 200;
+    font-size: 1.1;
 }
 
 .CircularProgressbar-text {
