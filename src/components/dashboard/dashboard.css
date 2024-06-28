@@ -14,6 +14,53 @@
     padding: 20px;
 }
 
+.countdown {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    z-index: 1000;
+    display: none;
+    position: fixed;
+    background: #000000c4;
+}
+
+#fader{
+    height: 400px;
+    width: 400px;
+    background: #3f0e0e;
+    border-radius: 50%;
+    animation: fader 1s linear infinite;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#fader h2{
+    color: #fff;
+    font-size: 4rem;
+    font-weight: 200;
+    margin-top: 50px;
+}
+
+#fader p{
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 150;
+
+}
+
+@keyframes fader {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.5;
+    }
+}
+
 .text {
     display: flex;
     flex-direction: column;

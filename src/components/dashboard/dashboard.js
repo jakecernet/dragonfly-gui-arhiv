@@ -66,6 +66,8 @@ function Dashboard({
 	let beeperEnabled = data.BeeperStatus ? "On" : "Off";
 	let position = [data.GPSCords.latitude, data.GPSCords.longitude];
 
+	let countdownNumber = 5;
+
 	const [servoStatus, setServoStatus] = useState(servoDeployed);
 	const [beeperStatus, setBeeperStatus] = useState(beeperEnabled);
 
@@ -120,13 +122,31 @@ function Dashboard({
 		}
 	};
 
-	const launchVehicle = () => {
-		if (vehicleStatus === "Armed") {
-			setVehicleStatus("Launched");
-			setInitialFlightTime(Date.now() / 1000);
+	const initVehicleLaunch = () => {
+		if (
+			vehicleStatus === "Armed" &&
+			InitialHeight !== "N/A" &&
+			InitialGPS !== "N/A"
+		) {
+			document.querySelector(".countdown").style.display = "flex";
+			let countdown = setInterval(() => {
+				countdownNumber--;
+				document.querySelector(".countdown h2").innerHTML =
+					countdownNumber;
+				if (countdownNumber === 0) {
+					clearInterval(countdown);
+					launchVehicle();
+					document.querySelector(".countdown").style.display = "none";
+				}
+			}, 1000);
 		} else {
 			return;
 		}
+	};
+
+	const launchVehicle = () => {
+		setVehicleStatus("Launched");
+		setInitialFlightTime(Date.now() / 1000);
 	};
 
 	useEffect(() => {
@@ -177,6 +197,12 @@ function Dashboard({
 
 	return (
 		<div className="dashboard">
+			<div className="countdown">
+				<div id="fader">
+					<p>Vehicle launch in</p>
+					<h2>{countdownNumber}</h2>
+				</div>
+			</div>
 			<section className="text">
 				<div className="heights">
 					<div>
@@ -304,7 +330,7 @@ function Dashboard({
 					</div>
 					<div
 						className="launch"
-						onClick={() => launchVehicle()}
+						onClick={() => initVehicleLaunch()}
 						style={{
 							opacity: vehicleStatus === "Armed" ? 1 : 0.2,
 						}}>
@@ -323,7 +349,7 @@ function Dashboard({
 				</div>
 			</section>
 			<section>
-				{/* <div id="map">
+				<div id="map">
 					<MapContainer
 						center={position}
 						zoom={20}
@@ -340,7 +366,7 @@ function Dashboard({
 						<Marker position={position} icon={icon}></Marker>
 						<ChangeView center={position} />
 					</MapContainer>
-				</div> */}
+				</div>
 			</section>
 		</div>
 	);
