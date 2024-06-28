@@ -227,11 +227,6 @@
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.37);
 }
 
-.launch button:hover {
-    background: #b90000c4;
-    cursor: pointer;
-}
-
 .leaflet-top {
     z-index: 500 !important;
 }

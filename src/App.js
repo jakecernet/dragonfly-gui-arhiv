@@ -9,7 +9,7 @@ import dashboardIcon from "./icons/dashboard.svg";
 import settingsIcon from "./icons/settings.svg";
 import analysisIcon from "./icons/analysis.svg";
 
-import GetData from "./Simulator.mjs";
+import GetData from "./components/tools/Simulator.mjs";
 
 function App() {
 	const [selected, setSelected] = useState("dashboard");
@@ -23,6 +23,9 @@ function App() {
 		Math.floor(Date.now() / 1000)
 	);
 	const [initialFlightTime, setInitialFlightTime] = useState(false);
+
+	const [distanceUnit, setDistanceUnit] = useState("m");
+	const [timeUnit, setTimeUnit] = useState("s");
 
 	useEffect(() => {
 		if (flightNumber.length > 10) {
@@ -60,25 +63,7 @@ function App() {
 	const handleKeyPress = (event) => {
 		if (event.key === "Enter") {
 			setFlightNumber(inputFlightNumber);
-			const newFlightNumber = flightNumber.trim();
-			if (newFlightNumber !== "") {
-				const existingFlightNumbers = document.cookie
-					.split(";")
-					.map((cookie) => cookie.trim().split("=")[0]);
-				if (!existingFlightNumbers.includes("flightNumber")) {
-					document.cookie = `flightNumber=${newFlightNumber}; path=/;`;
-				} else {
-					const existingFlightNumber = document.cookie
-						.split(";")
-						.find((cookie) =>
-							cookie.trim().startsWith("flightNumber")
-						)
-						.split("=")[1];
-					document.cookie = `flightNumber=${existingFlightNumber},${newFlightNumber}; path=/;`;
-				}
-			}
 			document.querySelector(".overlay").style.display = "none";
-			document.title = `Flight ${newFlightNumber} - Ready`;
 		}
 	};
 
@@ -122,16 +107,13 @@ function App() {
 			document.querySelector("nav ul li:nth-child(2)").style.opacity =
 				"0.5";
 		}
-	}, [vehicleStatus]);
-
-	useEffect(() => {
 		if (vehicleStatus === "Launched") {
 			document.getElementById("colored").style.color = "red";
 		}
 	}, [vehicleStatus]);
 
 	return (
-		<div className="App">
+		<div>
 			<div className="overlay">
 				<div className="box">
 					<div className="div_organize">
@@ -175,7 +157,7 @@ function App() {
 							: "N/A"}
 					</h2>
 					<h2>
-						Uptime: {(Date.now() / 1000 - initialUptime).toFixed(1)}
+						Uptime: {(Date.now() / 1000 - initialUptime).toFixed(1)} {timeUnit}
 					</h2>
 				</div>
 			</div>
@@ -191,14 +173,20 @@ function App() {
 						setInitialFlightTime={setInitialFlightTime}
 						initialFlightTime={initialFlightTime}
 						initialUptime={initialUptime}
+						setInitialUptime={setInitialUptime}
+						distanceUnit={distanceUnit}
 					/>
 				)}
 				{selected === "analysis" && (
-					<Analysis
-						AnalysisData={AnalysisData}
+					<Analysis AnalysisData={AnalysisData} />
+				)}
+				{selected === "settings" && (
+					<Settings
+						data={displayData}
+						setDistanceUnit={setDistanceUnit}
+						setTimeUnit={setTimeUnit}
 					/>
 				)}
-				{selected === "settings" && <Settings data={displayData} />}
 			</div>
 			<nav>
 				<ul>

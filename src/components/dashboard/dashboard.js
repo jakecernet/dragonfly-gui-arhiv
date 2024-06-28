@@ -11,8 +11,8 @@ import L from "leaflet";
 import locationMarker from "../../icons/location_marker.png";
 import settingsIcon from "../../icons/settings.svg";
 
-import useWebSocket from "../../useWebSocket";
-import { haversineDistance } from "../../AdditionalFunctions";
+import useWebSocket from "../tools/useWebSocket";
+import { haversineDistance } from "../tools/AdditionalFunctions";
 
 const icon = new L.Icon({
 	iconUrl: locationMarker,
@@ -155,24 +155,21 @@ function Dashboard({
 
 	useEffect(() => {
 		sendMessage({ command: "initial_gps", payload: InitialGPS });
-	}, [InitialGPS]);
-
-	useEffect(() => {
-		sendMessage({ command: "flight_number", payload: flightNumber });
-	}, [flightNumber]);
-
-	useEffect(() => {
 		if (WebSocketData) {
 			if (WebSocketData.command === "view_only") {
 				setVehicleStatus("View only");
 				setAnalysisData(WebSocketData.payload);
 			}
 		}
-	}, [WebSocketData]);
-
-	useEffect(() => {
-		sendMessage({ command: "vehicle_status", payload: vehicleStatus });
-	}, [vehicleStatus]);
+		sendMessage({
+			command: "flight_number",
+			payload: flightNumber,
+		});
+		sendMessage({
+			command: "vehicle_status",
+			payload: vehicleStatus,
+		});
+	}, [InitialGPS, flightNumber, WebSocketData, vehicleStatus]);
 
 	const handleInitGPS = () => {
 		setInitialGPS(data.GPSCords.latitude + "," + data.GPSCords.longitude);
@@ -322,8 +319,8 @@ function Dashboard({
 										: "pointer",
 								backgroundColor:
 									vehicleStatus === "Launched"
-										? "red"
-										: "green",
+										? "rgb(109, 21, 21)"
+										: "rgb(21, 109, 50)",
 							}}>
 							{vehicleStatus === "Ready" ? "Arm" : "Disarm"}
 						</button>
@@ -341,33 +338,35 @@ function Dashboard({
 										? "pointer"
 										: "not-allowed",
 								backgroundColor:
-									vehicleStatus === "Armed" ? "green" : "red",
+									vehicleStatus === "Armed"
+										? "rgb(21, 109, 50)"
+										: "rgb(109, 21, 21)",
 							}}>
 							Launch
 						</button>
 					</div>
 				</div>
 			</section>
-			<section>
-				<div id="map">
-					<MapContainer
-						center={position}
-						zoom={20}
-						scrollWheelZoom={true}
-						attributionControl={false}
-						preferCanvas={false}
-						style={{
-							height: "100%",
-							width: "85%",
-							borderRadius: "10px",
-							marginTop: "10px",
-						}}>
-						<TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
-						<Marker position={position} icon={icon}></Marker>
-						<ChangeView center={position} />
-					</MapContainer>
-				</div>
-			</section>
+			{/* <section>
+                <div id="map">
+                    <MapContainer
+                        center={position}
+                        zoom={20}
+                        scrollWheelZoom={true}
+                        attributionControl={false}
+                        preferCanvas={false}
+                        style={{
+                            height: "100%",
+                            width: "85%",
+                            borderRadius: "10px",
+                            marginTop: "10px",
+                        }}>
+                        <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
+                        <Marker position={position} icon={icon}></Marker>
+                        <ChangeView center={position} />
+                    </MapContainer>
+                </div>
+            </section> */}
 		</div>
 	);
 }
