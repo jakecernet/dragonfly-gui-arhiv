@@ -318,9 +318,9 @@ function Dashboard({
 										? "not-allowed"
 										: "pointer",
 								backgroundColor:
-									vehicleStatus === "Launched"
-										? "rgb(109, 21, 21)"
-										: "rgb(21, 109, 50)",
+									vehicleStatus === "Ready"
+										? "rgb(1, 143, 6)"
+										: "rgb(159, 170, 2)",
 							}}>
 							{vehicleStatus === "Ready" ? "Arm" : "Disarm"}
 						</button>
@@ -332,6 +332,7 @@ function Dashboard({
 							opacity: vehicleStatus === "Armed" ? 1 : 0.2,
 						}}>
 						<button
+						disabled={vehicleStatus === "Armed" ? false : true}
 							style={{
 								cursor:
 									vehicleStatus === "Armed"
@@ -339,15 +340,15 @@ function Dashboard({
 										: "not-allowed",
 								backgroundColor:
 									vehicleStatus === "Armed"
-										? "rgb(21, 109, 50)"
-										: "rgb(109, 21, 21)",
+										? "rgb(106, 0, 0)"
+										: "rgb(61, 90, 128)",
 							}}>
 							Launch
 						</button>
 					</div>
 				</div>
 			</section>
-			{/* <section>
+			<section>
                 <div id="map">
                     <MapContainer
                         center={position}
@@ -366,7 +367,7 @@ function Dashboard({
                         <ChangeView center={position} />
                     </MapContainer>
                 </div>
-            </section> */}
+            </section>
 		</div>
 	);
 }
