@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    margin-top: 80px;
+    margin-top: 40px;
     height: 700px;
 }
 
@@ -11,7 +11,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px;
+    padding: 0 20px;
 }
 
 .countdown {
@@ -26,7 +26,7 @@
     background: #000000c4;
 }
 
-#fader{
+#fader {
     height: 400px;
     width: 400px;
     background: #3f0e0e;
@@ -38,14 +38,14 @@
     justify-content: center;
 }
 
-#fader h2{
+#fader h2 {
     color: #fff;
     font-size: 4rem;
     font-weight: 200;
     margin-top: 50px;
 }
 
-#fader p{
+#fader p {
     color: #fff;
     font-size: 1.5rem;
     font-weight: 150;
@@ -56,6 +56,7 @@
     0% {
         opacity: 1;
     }
+
     100% {
         opacity: 0.5;
     }
@@ -220,11 +221,10 @@
     transition: 0.2s;
     color: #fff;
     font-size: 1.8rem;
-    font-weight: 600;
+    font-weight: 400;
     width: 150px;
     height: 150px;
     margin: 10px;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.37);
 }
 
 .leaflet-top {

@@ -332,7 +332,7 @@ function Dashboard({
 							opacity: vehicleStatus === "Armed" ? 1 : 0.2,
 						}}>
 						<button
-						disabled={vehicleStatus === "Armed" ? false : true}
+							disabled={vehicleStatus === "Armed" ? false : true}
 							style={{
 								cursor:
 									vehicleStatus === "Armed"
@@ -349,25 +349,25 @@ function Dashboard({
 				</div>
 			</section>
 			<section>
-                <div id="map">
-                    <MapContainer
-                        center={position}
-                        zoom={20}
-                        scrollWheelZoom={true}
-                        attributionControl={false}
-                        preferCanvas={false}
-                        style={{
-                            height: "100%",
-                            width: "85%",
-                            borderRadius: "10px",
-                            marginTop: "10px",
-                        }}>
-                        <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
-                        <Marker position={position} icon={icon}></Marker>
-                        <ChangeView center={position} />
-                    </MapContainer>
-                </div>
-            </section>
+				<div id="map">
+					<MapContainer
+						center={position}
+						zoom={20}
+						scrollWheelZoom={true}
+						attributionControl={false}
+						preferCanvas={false}
+						style={{
+							height: "100%",
+							width: "85%",
+							borderRadius: "10px",
+							marginTop: "10px",
+						}}>
+						<TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
+						<Marker position={position} icon={icon}></Marker>
+						<ChangeView center={position} />
+					</MapContainer>
+				</div>
+			</section>
 		</div>
 	);
 }
