@@ -158,11 +158,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    width: 200px;
+    height: 200px;
 }
 
 .vodoravno .parameter .circle {
-    width: 85%;
+    width: 150px;
     border-radius: 50%;
     box-shadow: 0 0 10px rgb(255, 255, 255);
 }
@@ -185,7 +186,7 @@
     align-items: center;
     width: 90%;
     margin: auto;
-    padding: 20px;
+    padding: 10px;
 }
 
 .toolbar div {
@@ -205,7 +206,6 @@
 .toolbar div h2,
 .toolbar div p {
     font-weight: 200;
-    font-size: 1.1;
 }
 
 .CircularProgressbar-text {
@@ -221,10 +221,40 @@
     transition: 0.2s;
     color: #fff;
     font-size: 1.8rem;
-    font-weight: 400;
-    width: 150px;
-    height: 150px;
-    margin: 10px;
+    font-weight: 450;
+    width: 120px;
+    height: 120px;
+}
+
+.pre-flight {
+    width: 90%;
+
+    ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            border-radius: 10px;
+            background: #1b1b1b5b;
+            margin: 10px 0;
+
+            p {
+                font-size: 1.2rem;
+                font-weight: 200;
+                color: #fff;
+            }
+
+            img {
+                width: 30px;
+                height: 30px;
+            }
+        }
+    }
 }
 
 .leaflet-top {

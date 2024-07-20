@@ -11,6 +11,9 @@ import L from "leaflet";
 import locationMarker from "../../icons/location_marker.png";
 import settingsIcon from "../../icons/settings.svg";
 
+import connectedIcon from "../../icons/connected.svg";
+import errorIcon from "../../icons/error.svg";
+
 import useWebSocket from "../tools/useWebSocket";
 import { haversineDistance } from "../tools/AdditionalFunctions";
 
@@ -72,6 +75,10 @@ function Dashboard({
 	const [beeperStatus, setBeeperStatus] = useState(beeperEnabled);
 
 	const [positionFromLaunchpad, setPositionFromLaunchpad] = useState("N/A");
+
+	const [gpsMsg, setGpsMsg] = useState("GPS module detected");
+	const [barMsg, setBarMsg] = useState("Barometer module not detected");
+	const [loraMsg, setloraMsg] = useState("LORA module detected");
 
 	useEffect(() => {
 		const output = haversineDistance(
@@ -346,6 +353,30 @@ function Dashboard({
 							Launch
 						</button>
 					</div>
+				</div>
+				<div className="pre-flight">
+					<ul>
+						<li>
+							<p>GPS module</p>
+							<img
+								src={connectedIcon}
+								alt="Connected"
+								title={gpsMsg}
+							/>
+						</li>
+						<li>
+							<p>Barometer</p>
+							<img src={errorIcon} alt="Error" title={barMsg} />
+						</li>
+						<li>
+							<p>LORA</p>
+							<img
+								src={connectedIcon}
+								alt="Connected"
+								title={loraMsg}
+							/>
+						</li>
+					</ul>
 				</div>
 			</section>
 			<section>
